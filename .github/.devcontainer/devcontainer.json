@@ -1,7 +1,7 @@
 // For format details, see https:https://containers.dev/implementors/spec/. For config options, see the README at:
 // https://github.com/devcontainers/images/tree/main/src/base-debian
 {
-	"name": "Kubernetes with e2e testing",
+	"name": "Kubernetes with e2e testing image build and push",
 	
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"workspaceFolder": "/go/src/k8s.io/kubernetes",
