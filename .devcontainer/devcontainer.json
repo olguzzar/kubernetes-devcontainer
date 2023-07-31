@@ -4,11 +4,11 @@
 
     // Image to pull when not building from scratch. See .devcontainer/build/devcontainer.json 
     // and .github/devcontainer-build-and-push.yml for the instructions on how this image is built
-    "image": "ghcr.io/craiglpeters/kubernetes-devcontainer",
+    "image": "ghcr.io/craiglpeters/kubernetes-devcontainer:latest",
 
     	// Ensure that the host machine has enough resources to build and test Kubernetes
 	// "hack/verify-typecheck.sh" test requires more CPUs, ensure you have larger machine type (e.g. 16 cores) to pass this test
 	"hostRequirements": {
 		"cpus": 4
-	},
+	}
 }
