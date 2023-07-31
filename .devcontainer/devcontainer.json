@@ -10,5 +10,22 @@
 	// "hack/verify-typecheck.sh" test requires more CPUs, ensure you have larger machine type (e.g. 16 cores) to pass this test
 	"hostRequirements": {
 		"cpus": 4
-	}
+	},
+	
+	// Copy over welcome message and install pyyaml
+	"onCreateCommand": "bash .devcontainer/setup.sh",
+
+	// for Kubernetes testing, suppress extraneous forwarding messages
+	"otherPortsAttributes": {
+		"onAutoForward": "silent"
+	},
+
+	"remoteUser": "root"
+
+	// Configure tool-specific properties.
+	// "customizations": {
+	// },
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
 }
