@@ -254,7 +254,7 @@ function install-gci-mounter-tools {
   mkdir -p "${CONTAINERIZED_MOUNTER_HOME}"
   chmod a+x "${CONTAINERIZED_MOUNTER_HOME}"
   mkdir -p "${CONTAINERIZED_MOUNTER_HOME}/rootfs"
-  download-or-bust "${mounter_tar_sha}" "https://dl.k8s.io/gci-mounter/mounter.tar"
+  download-or-bust "${mounter_tar_sha}" "https://storage.googleapis.com/kubernetes-release/gci-mounter/mounter.tar"
   cp "${KUBE_HOME}/kubernetes/server/bin/mounter" "${CONTAINERIZED_MOUNTER_HOME}/mounter"
   chmod a+x "${CONTAINERIZED_MOUNTER_HOME}/mounter"
   mv "${KUBE_HOME}/mounter.tar" /tmp/mounter.tar
@@ -297,7 +297,7 @@ function install-node-problem-detector {
   fi
 
   echo "Downloading ${npd_tar}."
-  local -r npd_release_path="${NODE_PROBLEM_DETECTOR_RELEASE_PATH:-https://dl.k8s.io}"
+  local -r npd_release_path="${NODE_PROBLEM_DETECTOR_RELEASE_PATH:-https://storage.googleapis.com/kubernetes-release}"
   download-or-bust "${npd_hash}" "${npd_release_path}/node-problem-detector/${npd_tar}"
   local -r npd_dir="${KUBE_HOME}/node-problem-detector"
   mkdir -p "${npd_dir}"
@@ -518,11 +518,6 @@ function install-containerd-ubuntu {
   # Override to latest versions of containerd and runc
   systemctl stop containerd
   if [[ -n "${UBUNTU_INSTALL_CONTAINERD_VERSION:-}" ]]; then
-    # TODO(https://github.com/containerd/containerd/issues/2901): Remove this check once containerd has arm64 release.
-    if [[ $(dpkg --print-architecture) != "amd64" ]]; then
-      echo "Unable to automatically install containerd in non-amd64 image. Bailing out..."
-      exit 2
-    fi
     # containerd versions have slightly different url(s), so try both
     # shellcheck disable=SC2086
     ( curl ${CURL_FLAGS} \
@@ -534,11 +529,6 @@ function install-containerd-ubuntu {
     | tar --overwrite -xzv -C /usr/
   fi
   if [[ -n "${UBUNTU_INSTALL_RUNC_VERSION:-}" ]]; then
-    # TODO: Remove this check once runc has arm64 release.
-    if [[ $(dpkg --print-architecture) != "amd64" ]]; then
-      echo "Unable to automatically install runc in non-amd64. Bailing out..."
-      exit 2
-    fi
     # shellcheck disable=SC2086
     curl ${CURL_FLAGS} \
       --location \
