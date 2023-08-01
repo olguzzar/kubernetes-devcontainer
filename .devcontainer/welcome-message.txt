@@ -1,15 +1,20 @@
-👋 Welcome to Kubernetes on Codespaces! For more info about Codespaces see https://docs.github.com/en/codespaces
-This environment satisfies the debian requirements at https://github.com/kubernetes/community/blob/master/contributors/devel/development.md
-This environment uses a debian image with the kubernetes/kubernetes repo, with Docker, go, kubectl, kubetest2 and kind installed. 
-For more information about the debian dev container base image see https://github.com/devcontainers/images/tree/main/src/base-debian
-This enviroronment was built from a container image. The configuration for the dev container is in the .github/.devcontainer folder.
-🎵 By default this environment uses a 4-core machine. Some tests may require a larger machine. In Codespaces you can change the machine type for your codespace. 
+👋 Welcome to Kubernetes contribution in a dev container! 
+     Works in GitHub Codespaces, VS Code, or in docker using the devcontainer cli
+
+See https://www.kubernetes.dev/docs/onboarding/ for guidance on contributing to Kuberentes
+
+This debian dev container image satisfies https://github.com/kubernetes/community/blob/master/contributors/devel/development.md and includes:
+ - kubernetes/kubernetes repository
+ - Docker
+ - go
+ - kubectl, etcd, kubetest2, and kind 
+For details about dev containers and the debian dev container base image see https://containers.dev and https://github.com/devcontainers/images/tree/main/src/base-debian.
+The configuration for the dev container is in the .github/.devcontainer folder. (will be moved to prow)
+🎵 By default in Codespaces this environment uses a 4-core machine. Some tests may require a larger machine. In Codespaces you can change the machine type. 
    See https://docs.github.com/en/codespaces/customizing-your-codespace/changing-the-machine-type-for-your-codespace
 
-⚙️ If you are working on your own fork, this environment is automatically configured to support the GitHub workflow https://www.kubernetes.dev/docs/guide/github-workflow/
+⚙️ If you are working in Codespaces on your own fork, this environment is automatically configured to support the GitHub 
+   workflow https://www.kubernetes.dev/docs/guide/github-workflow/ (omit the clone step)
 ↪️ Otherwise Codespaces will automatically fork the repository for you when you make your first push
-✅ Verify that your git remote is correct: `git remote -v`
-➡️ Then create your working branch: `git checkout -b myfeature`
-📝 Edit code, run make, kind and kubectl, and kubetest2 as you need.
 
 🔍 To explore VS Code to its fullest, search using the Command Palette (Cmd/Ctrl + Shift + P or F1).
