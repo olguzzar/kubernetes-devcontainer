@@ -28,7 +28,7 @@
 		// Python required for some hack tools
 		"ghcr.io/devcontainers/features/python:1": {},
 		
-		// TO DO - move these features to other projects, and publish them
+		// TO DO - move these features from local to their projects, and publish them
 		"./local-features/kubectl-kind": {},
 		"./local-features/etcd": {},
 		"./local-features/kubetest2": {}
