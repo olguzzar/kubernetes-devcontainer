@@ -1,4 +1,8 @@
 👋 Welcome to Kubernetes on Codespaces! For more info about Codespaces see https://docs.github.com/en/codespaces
+This environment satisfies the debian requirements at https://github.com/kubernetes/community/blob/master/contributors/devel/development.md
+This environment uses a debian image with the kubernetes/kubernetes repo, with Docker, go, kubectl, kubetest2 and kind installed. 
+For more information about the debian dev container base image see https://github.com/devcontainers/images/tree/main/src/base-debian
+This enviroronment was built from a container image. The configuration for the dev container is in the .github/.devcontainer folder.
 
 🎵 Some tests require a larger machine. In Codespaces you can change the machine type for your codespace. 
 See https://docs.github.com/en/codespaces/customizing-your-codespace/changing-the-machine-type-for-your-codespace
@@ -8,9 +12,5 @@ See https://docs.github.com/en/codespaces/customizing-your-codespace/changing-th
 ✅ Verify that your git remote is correct: `git remote -v`
 ➡️ Then create your working branch: `git checkout -b myfeature`
 📝 Edit code, run make, kind and kubectl, and kubetest2 as you need.
-
-This environment uses a debian image with the kubernetes/kubernetes repo, with Docker, go, kubectl, kubetest2 and kind installed. 
-For more information about the debian dev container base image see https://github.com/devcontainers/images/tree/main/src/base-debian
-This enviroronment was built from a container image. The configuration for the dev container is in the .github/.devcontainer folder.
 
 🔍 To explore VS Code to its fullest, search using the Command Palette (Cmd/Ctrl + Shift + P or F1).
