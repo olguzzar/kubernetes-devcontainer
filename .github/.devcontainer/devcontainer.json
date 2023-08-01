@@ -4,8 +4,6 @@
 	"name": "Kubernetes with e2e testing image build and push",
 	
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
-	"workspaceFolder": "/go/src/k8s.io/kubernetes",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/go/src/k8s.io/kubernetes,type=bind,consistency=cached",
 
 	// Install utils, go, docker-in-docker, and other tools
 	// For more info about dev container Features see https://containers.dev/features
