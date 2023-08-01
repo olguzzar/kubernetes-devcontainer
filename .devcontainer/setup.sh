@@ -18,3 +18,11 @@ set -eux
 
 # Copies over welcome message
 cp .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+
+# Setup environment variables for contributing to the Kubernetes project using the GitHub workflow
+# as documented at https://www.kubernetes.dev/docs/guide/github-workflow/
+export working_dir="$(go env GOPATH)/src/k8s.io"
+export user="$GITHUB_USER"
+git remote add upstream https://github.com/kubernetes/kubernetes.git
+# Never push to upstream master
+git remote set-url --push upstream no_push
