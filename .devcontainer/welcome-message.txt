@@ -3,9 +3,8 @@ This environment satisfies the debian requirements at https://github.com/kuberne
 This environment uses a debian image with the kubernetes/kubernetes repo, with Docker, go, kubectl, kubetest2 and kind installed. 
 For more information about the debian dev container base image see https://github.com/devcontainers/images/tree/main/src/base-debian
 This enviroronment was built from a container image. The configuration for the dev container is in the .github/.devcontainer folder.
-
-🎵 Some tests require a larger machine. In Codespaces you can change the machine type for your codespace. 
-See https://docs.github.com/en/codespaces/customizing-your-codespace/changing-the-machine-type-for-your-codespace
+🎵 By default this environment uses a 4-core machine. Some tests may require a larger machine. In Codespaces you can change the machine type for your codespace. 
+   See https://docs.github.com/en/codespaces/customizing-your-codespace/changing-the-machine-type-for-your-codespace
 
 ⚙️ If you are working on your own fork, this environment is automatically configured to support the GitHub workflow https://www.kubernetes.dev/docs/guide/github-workflow/
 ↪️ Otherwise Codespaces will automatically fork the repository for you when you make your first push
