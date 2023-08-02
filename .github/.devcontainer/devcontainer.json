@@ -8,9 +8,9 @@
 	// Install utils, go, docker-in-docker, and other tools
 	// For more info about dev container Features see https://containers.dev/features
 	"features": {
-		// Install go v1.19
+		// Install go latest. Was v1.19
 		"ghcr.io/devcontainers/features/go:1": {
-			"version": "1.19",
+			"version": "latest",
 			"username": "root"
 		},
 		// Install kubectl, but skip minikube and helm
