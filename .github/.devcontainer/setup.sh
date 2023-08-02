@@ -11,12 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 #!/usr/bin/env bash
 
 set -eux
-
-python3 -m pip install --user --upgrade --no-cache-dir pyyaml
 
 echo "Cloning kubernetes/kubectl" && mkdir -p /go/src/sigs.k8s.io && cd /go/src/sigs.k8s.io && git clone --depth=1 https://github.com/kubernetes/kubectl
 echo "Cloning golang/term" && cd /go/src && git clone --depth=1 https://github.com/golang/term.git

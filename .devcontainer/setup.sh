@@ -15,6 +15,9 @@
 
 set -eux
 
+# Install pyyaml as required by verify.publishing-bot
+python3 -m pip install --user --upgrade --no-cache-dir pyyaml
+
 # Copies over welcome message
 cp .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
 
