@@ -529,7 +529,7 @@ var _ = utils.SIGDescribe("PersistentVolumes-local ", func() {
 									continue
 								}
 								err = config.client.CoreV1().PersistentVolumes().Delete(backgroundCtx, pv.Name, metav1.DeleteOptions{})
-								if errors.Is(err, context.Canceled) {
+								if apierrors.IsNotFound(err) || errors.Is(err, context.Canceled) {
 									continue
 								}
 								framework.ExpectNoError(err)
@@ -1069,7 +1069,7 @@ func newLocalClaimWithName(config *localTestConfig, name string) *v1.PersistentV
 			AccessModes: []v1.PersistentVolumeAccessMode{
 				v1.ReadWriteOnce,
 			},
-			Resources: v1.ResourceRequirements{
+			Resources: v1.VolumeResourceRequirements{
 				Requests: v1.ResourceList{
 					v1.ResourceName(v1.ResourceStorage): resource.MustParse(testRequestSize),
 				},
