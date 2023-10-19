@@ -911,6 +911,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &applyconfigurationscorev1.ServiceStatusApplyConfiguration{}
 	case corev1.SchemeGroupVersion.WithKind("SessionAffinityConfig"):
 		return &applyconfigurationscorev1.SessionAffinityConfigApplyConfiguration{}
+	case corev1.SchemeGroupVersion.WithKind("SleepAction"):
+		return &applyconfigurationscorev1.SleepActionApplyConfiguration{}
 	case corev1.SchemeGroupVersion.WithKind("StorageOSPersistentVolumeSource"):
 		return &applyconfigurationscorev1.StorageOSPersistentVolumeSourceApplyConfiguration{}
 	case corev1.SchemeGroupVersion.WithKind("StorageOSVolumeSource"):
@@ -1293,10 +1295,6 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &applyconfigurationsnetworkingv1.ServiceBackendPortApplyConfiguration{}
 
 		// Group=networking.k8s.io, Version=v1alpha1
-	case networkingv1alpha1.SchemeGroupVersion.WithKind("ClusterCIDR"):
-		return &applyconfigurationsnetworkingv1alpha1.ClusterCIDRApplyConfiguration{}
-	case networkingv1alpha1.SchemeGroupVersion.WithKind("ClusterCIDRSpec"):
-		return &applyconfigurationsnetworkingv1alpha1.ClusterCIDRSpecApplyConfiguration{}
 	case networkingv1alpha1.SchemeGroupVersion.WithKind("IPAddress"):
 		return &applyconfigurationsnetworkingv1alpha1.IPAddressApplyConfiguration{}
 	case networkingv1alpha1.SchemeGroupVersion.WithKind("IPAddressSpec"):

@@ -154,7 +154,7 @@ func NewFakeProxier(ipt utiliptables.Interface, ipvs utilipvs.Interface, ipset u
 		svcPortMap:            make(proxy.ServicePortMap),
 		serviceChanges:        proxy.NewServiceChangeTracker(newServiceInfo, ipFamily, nil, nil),
 		endpointsMap:          make(proxy.EndpointsMap),
-		endpointsChanges:      proxy.NewEndpointChangeTracker(testHostname, nil, ipFamily, nil, nil),
+		endpointsChanges:      proxy.NewEndpointsChangeTracker(testHostname, nil, ipFamily, nil, nil),
 		excludeCIDRs:          excludeCIDRs,
 		iptables:              ipt,
 		ipvs:                  ipvs,
@@ -4358,7 +4358,7 @@ raid10 57344 0 - Live 0xffffffffc0597000`,
 }
 
 // The majority of EndpointSlice specific tests are not ipvs specific and focus on
-// the shared EndpointChangeTracker and EndpointSliceCache. This test ensures that the
+// the shared EndpointsChangeTracker and EndpointSliceCache. This test ensures that the
 // ipvs proxier supports translating EndpointSlices to ipvs output.
 func TestEndpointSliceE2E(t *testing.T) {
 	ipt := iptablestest.NewFake()
@@ -4662,6 +4662,7 @@ func TestCreateAndLinkKubeChain(t *testing.T) {
 :KUBE-PROXY-FIREWALL - [0:0]
 :KUBE-SOURCE-RANGES-FIREWALL - [0:0]
 :KUBE-IPVS-FILTER - [0:0]
+:KUBE-IPVS-OUT-FILTER - [0:0]
 `
 	assert.Equal(t, expectedNATChains, fp.natChains.String())
 	assert.Equal(t, expectedFilterChains, fp.filterChains.String())

@@ -184,6 +184,24 @@ const (
 	// Enables server-side field validation.
 	ServerSideFieldValidation featuregate.Feature = "ServerSideFieldValidation"
 
+	// owner: @enj
+	// beta: v1.29
+	//
+	// Enables http2 DOS mitigations for unauthenticated clients.
+	//
+	// Some known reasons to disable these mitigations:
+	//
+	// An API server that is fronted by an L7 load balancer that is set up
+	// to mitigate http2 attacks may opt to disable this protection to prevent
+	// unauthenticated clients from disabling connection reuse between the load
+	// balancer and the API server (many incoming connections could share the
+	// same backend connection).
+	//
+	// An API server that is on a private network may opt to disable this
+	// protection to prevent performance regressions for unauthenticated
+	// clients.
+	UnauthenticatedHTTP2DOSMitigation featuregate.Feature = "UnauthenticatedHTTP2DOSMitigation"
+
 	// owner: @caesarxuchao @roycaihw
 	// alpha: v1.20
 	//
@@ -204,6 +222,13 @@ const (
 	//
 	// Enables Structured Authentication Configuration
 	StructuredAuthenticationConfiguration featuregate.Feature = "StructuredAuthenticationConfiguration"
+
+	// owner: @palnabarun
+	// kep: https://kep.k8s.io/3221
+	// alpha: v1.29
+	//
+	// Enables Structured Authorization Configuration
+	StructuredAuthorizationConfiguration featuregate.Feature = "StructuredAuthorizationConfiguration"
 
 	// owner: @wojtek-t
 	// alpha: v1.15
@@ -286,6 +311,10 @@ var defaultKubernetesFeatureGates = map[featuregate.Feature]featuregate.FeatureS
 	StorageVersionHash: {Default: true, PreRelease: featuregate.Beta},
 
 	StructuredAuthenticationConfiguration: {Default: false, PreRelease: featuregate.Alpha},
+
+	StructuredAuthorizationConfiguration: {Default: false, PreRelease: featuregate.Alpha},
+
+	UnauthenticatedHTTP2DOSMitigation: {Default: true, PreRelease: featuregate.Beta},
 
 	WatchBookmark: {Default: true, PreRelease: featuregate.GA, LockToDefault: true},
 

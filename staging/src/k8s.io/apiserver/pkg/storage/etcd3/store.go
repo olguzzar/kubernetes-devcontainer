@@ -36,7 +36,6 @@ import (
 	"k8s.io/apimachinery/pkg/conversion"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/util/validation/field"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/apiserver/pkg/audit"
 	"k8s.io/apiserver/pkg/storage"
@@ -112,12 +111,11 @@ func newStore(c *clientv3.Client, codec runtime.Codec, newFunc, newListFunc func
 		pathPrefix += "/"
 	}
 
-	// TODO(p0lyn0mial): pass newListFunc and resourcePrefix to the watcher
 	w := &watcher{
 		client:        c,
 		codec:         codec,
-		groupResource: groupResource,
 		newFunc:       newFunc,
+		groupResource: groupResource,
 		versioner:     versioner,
 		transformer:   transformer,
 	}
@@ -126,7 +124,6 @@ func newStore(c *clientv3.Client, codec runtime.Codec, newFunc, newListFunc func
 	} else {
 		w.objectType = reflect.TypeOf(newFunc()).String()
 	}
-
 	s := &store{
 		client:              c,
 		codec:               codec,
@@ -138,6 +135,10 @@ func newStore(c *clientv3.Client, codec runtime.Codec, newFunc, newListFunc func
 		groupResourceString: groupResource.String(),
 		watcher:             w,
 		leaseManager:        newDefaultLeaseManager(c, leaseManagerConfig),
+	}
+
+	w.getCurrentStorageRV = func(ctx context.Context) (uint64, error) {
+		return storage.GetCurrentResourceVersionFromStorage(ctx, s, newListFunc, resourcePrefix, w.objectType)
 	}
 	return s
 }
@@ -198,7 +199,7 @@ func (s *store) Create(ctx context.Context, key string, obj, out runtime.Object,
 	)
 	defer span.End(500 * time.Millisecond)
 	if version, err := s.versioner.ObjectResourceVersion(obj); err == nil && version != 0 {
-		return errors.New("resourceVersion should not be set on objects to be created")
+		return storage.ErrResourceVersionSetOnCreate
 	}
 	if err := s.versioner.PrepareObjectForStorage(obj); err != nil {
 		return fmt.Errorf("PrepareObjectForStorage failed: %v", err)
@@ -271,15 +272,7 @@ func (s *store) Delete(
 func (s *store) conditionalDelete(
 	ctx context.Context, key string, out runtime.Object, v reflect.Value, preconditions *storage.Preconditions,
 	validateDeletion storage.ValidateObjectFunc, cachedExistingObject runtime.Object) error {
-	getCurrentState := func() (*objState, error) {
-		startTime := time.Now()
-		getResp, err := s.client.KV.Get(ctx, key)
-		metrics.RecordEtcdRequest("get", s.groupResourceString, err, startTime)
-		if err != nil {
-			return nil, err
-		}
-		return s.getState(ctx, getResp, key, v, false)
-	}
+	getCurrentState := s.getCurrentState(ctx, key, v, false)
 
 	var origState *objState
 	var err error
@@ -407,15 +400,7 @@ func (s *store) GuaranteedUpdate(
 		return fmt.Errorf("unable to convert output object to pointer: %v", err)
 	}
 
-	getCurrentState := func() (*objState, error) {
-		startTime := time.Now()
-		getResp, err := s.client.KV.Get(ctx, preparedKey)
-		metrics.RecordEtcdRequest("get", s.groupResourceString, err, startTime)
-		if err != nil {
-			return nil, err
-		}
-		return s.getState(ctx, getResp, preparedKey, v, ignoreNotFound)
-	}
+	getCurrentState := s.getCurrentState(ctx, preparedKey, v, ignoreNotFound)
 
 	var origState *objState
 	var origStateIsCurrent bool
@@ -855,18 +840,7 @@ func growSlice(v reflect.Value, maxCapacity int, sizes ...int) {
 }
 
 // Watch implements storage.Interface.Watch.
-// TODO(#115478): In order to graduate the WatchList feature to beta, the etcd3 implementation must/should also support it.
 func (s *store) Watch(ctx context.Context, key string, opts storage.ListOptions) (watch.Interface, error) {
-	// it is safe to skip SendInitialEvents if the request is backward compatible
-	// see https://github.com/kubernetes/kubernetes/blob/267eb25e60955fe8e438c6311412e7cf7d028acb/staging/src/k8s.io/apiserver/pkg/storage/etcd3/watcher.go#L260
-	compatibility := opts.Predicate.AllowWatchBookmarks == false && (opts.ResourceVersion == "" || opts.ResourceVersion == "0")
-	if opts.SendInitialEvents != nil && !compatibility {
-		return nil, apierrors.NewInvalid(
-			schema.GroupKind{Group: s.groupResource.Group, Kind: s.groupResource.Resource},
-			"",
-			field.ErrorList{field.Forbidden(field.NewPath("sendInitialEvents"), "for watch is unsupported by an etcd cluster")},
-		)
-	}
 	preparedKey, err := s.prepareKey(key)
 	if err != nil {
 		return nil, err
@@ -887,6 +861,18 @@ func (s *store) watchContext(ctx context.Context) context.Context {
 	// hard killed, other servers will take an election timeout to realize
 	// leader lost and start campaign.
 	return clientv3.WithRequireLeader(ctx)
+}
+
+func (s *store) getCurrentState(ctx context.Context, key string, v reflect.Value, ignoreNotFound bool) func() (*objState, error) {
+	return func() (*objState, error) {
+		startTime := time.Now()
+		getResp, err := s.client.KV.Get(ctx, key)
+		metrics.RecordEtcdRequest("get", s.groupResourceString, err, startTime)
+		if err != nil {
+			return nil, err
+		}
+		return s.getState(ctx, getResp, key, v, ignoreNotFound)
+	}
 }
 
 func (s *store) getState(ctx context.Context, getResp *clientv3.GetResponse, key string, v reflect.Value, ignoreNotFound bool) (*objState, error) {

@@ -92,13 +92,15 @@ type ClusterEventWithHint struct {
 // QueueingHintFn returns a hint that signals whether the event can make a Pod,
 // which was rejected by this plugin in the past scheduling cycle, schedulable or not.
 // It's called before a Pod gets moved from unschedulableQ to backoffQ or activeQ.
+// If it returns an error, we'll take the returned QueueingHint as `QueueAfterBackoff` at the caller whatever we returned here so that
+// we can prevent the Pod from stucking in the unschedulable pod pool.
 //
 // - `pod`: the Pod to be enqueued, which is rejected by this plugin in the past.
 // - `oldObj` `newObj`: the object involved in that event.
 //   - For example, the given event is "Node deleted", the `oldObj` will be that deleted Node.
 //   - `oldObj` is nil if the event is add event.
 //   - `newObj` is nil if the event is delete event.
-type QueueingHintFn func(logger klog.Logger, pod *v1.Pod, oldObj, newObj interface{}) QueueingHint
+type QueueingHintFn func(logger klog.Logger, pod *v1.Pod, oldObj, newObj interface{}) (QueueingHint, error)
 
 type QueueingHint int
 
@@ -460,8 +462,20 @@ func getNamespacesFromPodAffinityTerm(pod *v1.Pod, podAffinityTerm *v1.PodAffini
 type ImageStateSummary struct {
 	// Size of the image
 	Size int64
-	// Used to track how many nodes have this image
+	// Used to track how many nodes have this image, it is computed from the Nodes field below
+	// during the execution of Snapshot.
 	NumNodes int
+	// A set of node names for nodes having this image present. This field is used for
+	// keeping track of the nodes during update/add/remove events.
+	Nodes sets.Set[string]
+}
+
+// Snapshot returns a copy without Nodes field of ImageStateSummary
+func (iss *ImageStateSummary) Snapshot() *ImageStateSummary {
+	return &ImageStateSummary{
+		Size:     iss.Size,
+		NumNodes: iss.Nodes.Len(),
+	}
 }
 
 // NodeInfo is node level aggregated information.
@@ -638,15 +652,15 @@ func (n *NodeInfo) Node() *v1.Node {
 	return n.node
 }
 
-// Clone returns a copy of this node.
-func (n *NodeInfo) Clone() *NodeInfo {
+// Snapshot returns a copy of this node, Except that ImageStates is copied without the Nodes field.
+func (n *NodeInfo) Snapshot() *NodeInfo {
 	clone := &NodeInfo{
 		node:             n.node,
 		Requested:        n.Requested.Clone(),
 		NonZeroRequested: n.NonZeroRequested.Clone(),
 		Allocatable:      n.Allocatable.Clone(),
 		UsedPorts:        make(HostPortInfo),
-		ImageStates:      n.ImageStates,
+		ImageStates:      make(map[string]*ImageStateSummary),
 		PVCRefCounts:     make(map[string]int),
 		Generation:       n.Generation,
 	}
@@ -668,6 +682,13 @@ func (n *NodeInfo) Clone() *NodeInfo {
 	}
 	if len(n.PodsWithRequiredAntiAffinity) > 0 {
 		clone.PodsWithRequiredAntiAffinity = append([]*PodInfo(nil), n.PodsWithRequiredAntiAffinity...)
+	}
+	if len(n.ImageStates) > 0 {
+		state := make(map[string]*ImageStateSummary, len(n.ImageStates))
+		for imageName, imageState := range n.ImageStates {
+			state[imageName] = imageState.Snapshot()
+		}
+		clone.ImageStates = state
 	}
 	for key, value := range n.PVCRefCounts {
 		clone.PVCRefCounts[key] = value

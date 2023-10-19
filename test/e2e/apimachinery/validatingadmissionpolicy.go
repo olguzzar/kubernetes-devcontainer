@@ -31,12 +31,13 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/wait"
+	"k8s.io/apiserver/pkg/features"
 	clientset "k8s.io/client-go/kubernetes"
 	"k8s.io/kubernetes/test/e2e/framework"
 	admissionapi "k8s.io/pod-security-admission/api"
 )
 
-var _ = SIGDescribe("ValidatingAdmissionPolicy [Privileged:ClusterAdmin][Alpha][Feature:ValidatingAdmissionPolicy]", func() {
+var _ = SIGDescribe("ValidatingAdmissionPolicy [Privileged:ClusterAdmin]", framework.WithFeatureGate(features.ValidatingAdmissionPolicy), func() {
 	f := framework.NewDefaultFramework("validating-admission-policy")
 	f.NamespacePodSecurityLevel = admissionapi.LevelBaseline
 
@@ -205,11 +206,14 @@ var _ = SIGDescribe("ValidatingAdmissionPolicy [Privileged:ClusterAdmin][Alpha][
 					Expression: "object.spec.replicas",
 				}).
 				WithVariable(admissionregistrationv1beta1.Variable{
-					Name:       "replicasReminder", // a bit artificial but good for testing purpose
-					Expression: "variables.replicas % 2",
+					Name:       "oddReplicas",
+					Expression: "variables.replicas % 2 == 1",
 				}).
 				WithValidation(admissionregistrationv1beta1.Validation{
-					Expression: "variables.replicas > 1 && variables.replicasReminder == 1",
+					Expression: "variables.replicas > 1",
+				}).
+				WithValidation(admissionregistrationv1beta1.Validation{
+					Expression: "variables.oddReplicas",
 				}).
 				Build()
 			policy, err := client.AdmissionregistrationV1beta1().ValidatingAdmissionPolicies().Create(ctx, policy, metav1.CreateOptions{})

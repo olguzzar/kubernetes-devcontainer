@@ -302,7 +302,7 @@ func NewFramework(ctx context.Context, r Registry, profile *config.KubeScheduler
 				Args: args,
 			})
 		}
-		p, err := factory(args, f)
+		p, err := factory(ctx, args, f)
 		if err != nil {
 			return nil, fmt.Errorf("initializing plugin %q: %w", name, err)
 		}
@@ -942,7 +942,7 @@ func addNominatedPods(ctx context.Context, fh framework.Handle, pod *v1.Pod, sta
 	if len(nominatedPodInfos) == 0 {
 		return false, state, nodeInfo, nil
 	}
-	nodeInfoOut := nodeInfo.Clone()
+	nodeInfoOut := nodeInfo.Snapshot()
 	stateOut := state.Clone()
 	podsAdded := false
 	for _, pi := range nominatedPodInfos {

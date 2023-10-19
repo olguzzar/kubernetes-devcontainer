@@ -552,6 +552,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"k8s.io/api/core/v1.ServiceSpec":                                                                        schema_k8sio_api_core_v1_ServiceSpec(ref),
 		"k8s.io/api/core/v1.ServiceStatus":                                                                      schema_k8sio_api_core_v1_ServiceStatus(ref),
 		"k8s.io/api/core/v1.SessionAffinityConfig":                                                              schema_k8sio_api_core_v1_SessionAffinityConfig(ref),
+		"k8s.io/api/core/v1.SleepAction":                                                                        schema_k8sio_api_core_v1_SleepAction(ref),
 		"k8s.io/api/core/v1.StorageOSPersistentVolumeSource":                                                    schema_k8sio_api_core_v1_StorageOSPersistentVolumeSource(ref),
 		"k8s.io/api/core/v1.StorageOSVolumeSource":                                                              schema_k8sio_api_core_v1_StorageOSVolumeSource(ref),
 		"k8s.io/api/core/v1.Sysctl":                                                                             schema_k8sio_api_core_v1_Sysctl(ref),
@@ -738,9 +739,6 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"k8s.io/api/networking/v1.NetworkPolicyPort":                                                            schema_k8sio_api_networking_v1_NetworkPolicyPort(ref),
 		"k8s.io/api/networking/v1.NetworkPolicySpec":                                                            schema_k8sio_api_networking_v1_NetworkPolicySpec(ref),
 		"k8s.io/api/networking/v1.ServiceBackendPort":                                                           schema_k8sio_api_networking_v1_ServiceBackendPort(ref),
-		"k8s.io/api/networking/v1alpha1.ClusterCIDR":                                                            schema_k8sio_api_networking_v1alpha1_ClusterCIDR(ref),
-		"k8s.io/api/networking/v1alpha1.ClusterCIDRList":                                                        schema_k8sio_api_networking_v1alpha1_ClusterCIDRList(ref),
-		"k8s.io/api/networking/v1alpha1.ClusterCIDRSpec":                                                        schema_k8sio_api_networking_v1alpha1_ClusterCIDRSpec(ref),
 		"k8s.io/api/networking/v1alpha1.IPAddress":                                                              schema_k8sio_api_networking_v1alpha1_IPAddress(ref),
 		"k8s.io/api/networking/v1alpha1.IPAddressList":                                                          schema_k8sio_api_networking_v1alpha1_IPAddressList(ref),
 		"k8s.io/api/networking/v1alpha1.IPAddressSpec":                                                          schema_k8sio_api_networking_v1alpha1_IPAddressSpec(ref),
@@ -4761,7 +4759,6 @@ func schema_k8sio_api_apiserverinternal_v1alpha1_StorageVersionCondition(ref com
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -4948,7 +4945,6 @@ func schema_k8sio_api_apps_v1_ControllerRevision(ref common.ReferenceCallback) c
 					"data": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Data is the serialized representation of the state.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -5096,7 +5092,6 @@ func schema_k8sio_api_apps_v1_DaemonSetCondition(ref common.ReferenceCallback) c
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -5432,14 +5427,12 @@ func schema_k8sio_api_apps_v1_DeploymentCondition(ref common.ReferenceCallback) 
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time this condition was updated.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -5782,7 +5775,6 @@ func schema_k8sio_api_apps_v1_ReplicaSetCondition(ref common.ReferenceCallback) 
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -6133,7 +6125,6 @@ func schema_k8sio_api_apps_v1_StatefulSetCondition(ref common.ReferenceCallback)
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -6519,7 +6510,6 @@ func schema_k8sio_api_apps_v1beta1_ControllerRevision(ref common.ReferenceCallba
 					"data": {
 						SchemaProps: spec.SchemaProps{
 							Description: "data is the serialized representation of the state.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -6667,14 +6657,12 @@ func schema_k8sio_api_apps_v1beta1_DeploymentCondition(ref common.ReferenceCallb
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time this condition was updated.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -7272,7 +7260,6 @@ func schema_k8sio_api_apps_v1beta1_StatefulSetCondition(ref common.ReferenceCall
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -7654,7 +7641,6 @@ func schema_k8sio_api_apps_v1beta2_ControllerRevision(ref common.ReferenceCallba
 					"data": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Data is the serialized representation of the state.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -7802,7 +7788,6 @@ func schema_k8sio_api_apps_v1beta2_DaemonSetCondition(ref common.ReferenceCallba
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -8137,14 +8122,12 @@ func schema_k8sio_api_apps_v1beta2_DeploymentCondition(ref common.ReferenceCallb
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time this condition was updated.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -8486,7 +8469,6 @@ func schema_k8sio_api_apps_v1beta2_ReplicaSetCondition(ref common.ReferenceCallb
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -8956,7 +8938,6 @@ func schema_k8sio_api_apps_v1beta2_StatefulSetCondition(ref common.ReferenceCall
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -9526,7 +9507,6 @@ func schema_k8sio_api_authentication_v1_TokenRequestStatus(ref common.ReferenceC
 					"expirationTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "ExpirationTimestamp is the time of expiration of the returned token.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -11421,7 +11401,6 @@ func schema_k8sio_api_autoscaling_v1_ContainerResourceMetricStatus(ref common.Re
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -11550,7 +11529,6 @@ func schema_k8sio_api_autoscaling_v1_ExternalMetricStatus(ref common.ReferenceCa
 					"currentValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentValue is the current value of the metric (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -11645,7 +11623,6 @@ func schema_k8sio_api_autoscaling_v1_HorizontalPodAutoscalerCondition(ref common
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the last time the condition transitioned from one status to another",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -11955,7 +11932,6 @@ func schema_k8sio_api_autoscaling_v1_ObjectMetricSource(ref common.ReferenceCall
 					"targetValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "targetValue is the target value of the metric (as a quantity).",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -12005,7 +11981,6 @@ func schema_k8sio_api_autoscaling_v1_ObjectMetricStatus(ref common.ReferenceCall
 					"currentValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentValue is the current value of the metric (as a quantity).",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -12048,7 +12023,6 @@ func schema_k8sio_api_autoscaling_v1_PodsMetricSource(ref common.ReferenceCallba
 					"targetAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -12085,7 +12059,6 @@ func schema_k8sio_api_autoscaling_v1_PodsMetricStatus(ref common.ReferenceCallba
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -12166,7 +12139,6 @@ func schema_k8sio_api_autoscaling_v1_ResourceMetricStatus(ref common.ReferenceCa
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -12642,7 +12614,6 @@ func schema_k8sio_api_autoscaling_v2_HorizontalPodAutoscalerCondition(ref common
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the last time the condition transitioned from one status to another",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -13351,7 +13322,6 @@ func schema_k8sio_api_autoscaling_v2beta1_ContainerResourceMetricStatus(ref comm
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -13475,7 +13445,6 @@ func schema_k8sio_api_autoscaling_v2beta1_ExternalMetricStatus(ref common.Refere
 					"currentValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentValue is the current value of the metric (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -13570,7 +13539,6 @@ func schema_k8sio_api_autoscaling_v2beta1_HorizontalPodAutoscalerCondition(ref c
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the last time the condition transitioned from one status to another",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -13906,7 +13874,6 @@ func schema_k8sio_api_autoscaling_v2beta1_ObjectMetricSource(ref common.Referenc
 					"targetValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "targetValue is the target value of the metric (as a quantity).",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -13956,7 +13923,6 @@ func schema_k8sio_api_autoscaling_v2beta1_ObjectMetricStatus(ref common.Referenc
 					"currentValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentValue is the current value of the metric (as a quantity).",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -13999,7 +13965,6 @@ func schema_k8sio_api_autoscaling_v2beta1_PodsMetricSource(ref common.ReferenceC
 					"targetAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -14036,7 +14001,6 @@ func schema_k8sio_api_autoscaling_v2beta1_PodsMetricStatus(ref common.ReferenceC
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -14117,7 +14081,6 @@ func schema_k8sio_api_autoscaling_v2beta1_ResourceMetricStatus(ref common.Refere
 					"currentAverageValue": {
 						SchemaProps: spec.SchemaProps{
 							Description: "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -14489,7 +14452,6 @@ func schema_k8sio_api_autoscaling_v2beta2_HorizontalPodAutoscalerCondition(ref c
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the last time the condition transitioned from one status to another",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -15404,14 +15366,12 @@ func schema_k8sio_api_batch_v1_JobCondition(ref common.ReferenceCallback) common
 					"lastProbeTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition was checked.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transit from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -16292,14 +16252,12 @@ func schema_k8sio_api_certificates_v1_CertificateSigningRequestCondition(ref com
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastUpdateTime is the time of the last update to this condition",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -16742,14 +16700,12 @@ func schema_k8sio_api_certificates_v1beta1_CertificateSigningRequestCondition(re
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "timestamp for the last update to this condition",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -18962,7 +18918,6 @@ func schema_k8sio_api_core_v1_ContainerStateRunning(ref common.ReferenceCallback
 					"startedAt": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time at which the container was last (re-)started",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -19013,14 +18968,12 @@ func schema_k8sio_api_core_v1_ContainerStateTerminated(ref common.ReferenceCallb
 					"startedAt": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time at which previous execution of the container started",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"finishedAt": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time at which the container last terminated",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -19150,8 +19103,7 @@ func schema_k8sio_api_core_v1_ContainerStatus(ref common.ReferenceCallback) comm
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -20331,14 +20283,12 @@ func schema_k8sio_api_core_v1_Event(ref common.ReferenceCallback) common.OpenAPI
 					"firstTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The time at which the most recent occurrence of this event was recorded.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -20359,7 +20309,6 @@ func schema_k8sio_api_core_v1_Event(ref common.ReferenceCallback) common.OpenAPI
 					"eventTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time when this Event was first observed.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -20475,7 +20424,6 @@ func schema_k8sio_api_core_v1_EventSeries(ref common.ReferenceCallback) common.O
 					"lastObservedTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time of the last occurrence observed",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -20959,7 +20907,6 @@ func schema_k8sio_api_core_v1_HTTPGetAction(ref common.ReferenceCallback) common
 					"port": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/util/intstr.IntOrString"),
 						},
 					},
@@ -21411,11 +21358,17 @@ func schema_k8sio_api_core_v1_LifecycleHandler(ref common.ReferenceCallback) com
 							Ref:         ref("k8s.io/api/core/v1.TCPSocketAction"),
 						},
 					},
+					"sleep": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Sleep represents the duration that the container should sleep before being terminated.",
+							Ref:         ref("k8s.io/api/core/v1.SleepAction"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/api/core/v1.ExecAction", "k8s.io/api/core/v1.HTTPGetAction", "k8s.io/api/core/v1.TCPSocketAction"},
+			"k8s.io/api/core/v1.ExecAction", "k8s.io/api/core/v1.HTTPGetAction", "k8s.io/api/core/v1.SleepAction", "k8s.io/api/core/v1.TCPSocketAction"},
 	}
 }
 
@@ -21485,8 +21438,7 @@ func schema_k8sio_api_core_v1_LimitRangeItem(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -21500,8 +21452,7 @@ func schema_k8sio_api_core_v1_LimitRangeItem(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -21515,8 +21466,7 @@ func schema_k8sio_api_core_v1_LimitRangeItem(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -21530,8 +21480,7 @@ func schema_k8sio_api_core_v1_LimitRangeItem(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -21545,8 +21494,7 @@ func schema_k8sio_api_core_v1_LimitRangeItem(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -21677,8 +21625,7 @@ func schema_k8sio_api_core_v1_List(ref common.ReferenceCallback) common.OpenAPID
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -21943,8 +21890,7 @@ func schema_k8sio_api_core_v1_NamespaceCondition(ref common.ReferenceCallback) c
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
-							Default: map[string]interface{}{},
-							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"reason": {
@@ -22231,14 +22177,12 @@ func schema_k8sio_api_core_v1_NodeCondition(ref common.ReferenceCallback) common
 					"lastHeartbeatTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time we got an update on a given condition.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transit from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -22448,8 +22392,7 @@ func schema_k8sio_api_core_v1_NodeResources(ref common.ReferenceCallback) common
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -22691,8 +22634,7 @@ func schema_k8sio_api_core_v1_NodeStatus(ref common.ReferenceCallback) common.Op
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -22706,8 +22648,7 @@ func schema_k8sio_api_core_v1_NodeStatus(ref common.ReferenceCallback) common.Op
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -23151,14 +23092,12 @@ func schema_k8sio_api_core_v1_PersistentVolumeClaimCondition(ref common.Referenc
 					"lastProbeTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastProbeTime is the time we probed the condition.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -23351,8 +23290,7 @@ func schema_k8sio_api_core_v1_PersistentVolumeClaimStatus(ref common.ReferenceCa
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -23386,8 +23324,7 @@ func schema_k8sio_api_core_v1_PersistentVolumeClaimStatus(ref common.ReferenceCa
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -23694,8 +23631,7 @@ func schema_k8sio_api_core_v1_PersistentVolumeSpec(ref common.ReferenceCallback)
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -24258,14 +24194,12 @@ func schema_k8sio_api_core_v1_PodCondition(ref common.ReferenceCallback) common.
 					"lastProbeTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time we probed the condition.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -25283,8 +25217,7 @@ func schema_k8sio_api_core_v1_PodSpec(ref common.ReferenceCallback) common.OpenA
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -25854,7 +25787,6 @@ func schema_k8sio_api_core_v1_PreferAvoidPodsEntry(ref common.ReferenceCallback)
 					"evictionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time at which this entry was added to the list.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -26414,7 +26346,6 @@ func schema_k8sio_api_core_v1_ReplicationControllerCondition(ref common.Referenc
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -26667,7 +26598,6 @@ func schema_k8sio_api_core_v1_ResourceFieldSelector(ref common.ReferenceCallback
 					"divisor": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Specifies the output format of the exposed resources, defaults to \"1\"",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -26801,8 +26731,7 @@ func schema_k8sio_api_core_v1_ResourceQuotaSpec(ref common.ReferenceCallback) co
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -26852,8 +26781,7 @@ func schema_k8sio_api_core_v1_ResourceQuotaStatus(ref common.ReferenceCallback) 
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -26867,8 +26795,7 @@ func schema_k8sio_api_core_v1_ResourceQuotaStatus(ref common.ReferenceCallback) 
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -26897,8 +26824,7 @@ func schema_k8sio_api_core_v1_ResourceRequirements(ref common.ReferenceCallback)
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -26912,8 +26838,7 @@ func schema_k8sio_api_core_v1_ResourceRequirements(ref common.ReferenceCallback)
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -28043,7 +27968,6 @@ func schema_k8sio_api_core_v1_ServicePort(ref common.ReferenceCallback) common.O
 					"targetPort": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/util/intstr.IntOrString"),
 						},
 					},
@@ -28390,6 +28314,28 @@ func schema_k8sio_api_core_v1_SessionAffinityConfig(ref common.ReferenceCallback
 	}
 }
 
+func schema_k8sio_api_core_v1_SleepAction(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "SleepAction describes a \"sleep\" action.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"seconds": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Seconds is the number of seconds to sleep.",
+							Default:     0,
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+				},
+				Required: []string{"seconds"},
+			},
+		},
+	}
+}
+
 func schema_k8sio_api_core_v1_StorageOSPersistentVolumeSource(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -28528,7 +28474,6 @@ func schema_k8sio_api_core_v1_TCPSocketAction(ref common.ReferenceCallback) comm
 					"port": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/util/intstr.IntOrString"),
 						},
 					},
@@ -29252,8 +29197,7 @@ func schema_k8sio_api_core_v1_VolumeResourceRequirements(ref common.ReferenceCal
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -29267,8 +29211,7 @@ func schema_k8sio_api_core_v1_VolumeResourceRequirements(ref common.ReferenceCal
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -29755,7 +29698,7 @@ func schema_k8sio_api_discovery_v1_EndpointPort(ref common.ReferenceCallback) co
 				Properties: map[string]spec.Schema{
 					"name": {
 						SchemaProps: spec.SchemaProps{
-							Description: "name represents the name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is dervied from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass DNS_LABEL validation: * must be no more than 63 characters long. * must consist of lower case alphanumeric characters or '-'. * must start and end with an alphanumeric character. Default is empty string.",
+							Description: "name represents the name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is derived from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass DNS_LABEL validation: * must be no more than 63 characters long. * must consist of lower case alphanumeric characters or '-'. * must start and end with an alphanumeric character. Default is empty string.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -30112,7 +30055,7 @@ func schema_k8sio_api_discovery_v1beta1_EndpointPort(ref common.ReferenceCallbac
 				Properties: map[string]spec.Schema{
 					"name": {
 						SchemaProps: spec.SchemaProps{
-							Description: "name represents the name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is dervied from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass DNS_LABEL validation: * must be no more than 63 characters long. * must consist of lower case alphanumeric characters or '-'. * must start and end with an alphanumeric character. Default is empty string.",
+							Description: "name represents the name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is derived from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass DNS_LABEL validation: * must be no more than 63 characters long. * must consist of lower case alphanumeric characters or '-'. * must start and end with an alphanumeric character. Default is empty string.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -30332,7 +30275,6 @@ func schema_k8sio_api_events_v1_Event(ref common.ReferenceCallback) common.OpenA
 					"eventTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "eventTime is the time when this Event was first observed. It is required.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -30407,14 +30349,12 @@ func schema_k8sio_api_events_v1_Event(ref common.ReferenceCallback) common.OpenA
 					"deprecatedFirstTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"deprecatedLastTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -30503,7 +30443,6 @@ func schema_k8sio_api_events_v1_EventSeries(ref common.ReferenceCallback) common
 					"lastObservedTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastObservedTime is the time when last Event from the series was seen before last heartbeat.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -30547,7 +30486,6 @@ func schema_k8sio_api_events_v1beta1_Event(ref common.ReferenceCallback) common.
 					"eventTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "eventTime is the time when this Event was first observed. It is required.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -30622,14 +30560,12 @@ func schema_k8sio_api_events_v1beta1_Event(ref common.ReferenceCallback) common.
 					"deprecatedFirstTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"deprecatedLastTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -30718,7 +30654,6 @@ func schema_k8sio_api_events_v1beta1_EventSeries(ref common.ReferenceCallback) c
 					"lastObservedTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastObservedTime is the time when last Event from the series was seen before last heartbeat.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -30807,7 +30742,6 @@ func schema_k8sio_api_extensions_v1beta1_DaemonSetCondition(ref common.Reference
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -31149,14 +31083,12 @@ func schema_k8sio_api_extensions_v1beta1_DeploymentCondition(ref common.Referenc
 					"lastUpdateTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time this condition was updated.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -31660,7 +31592,6 @@ func schema_k8sio_api_extensions_v1beta1_IngressBackend(ref common.ReferenceCall
 					"servicePort": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Specifies the port of the referenced service.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/util/intstr.IntOrString"),
 						},
 					},
@@ -32397,7 +32328,6 @@ func schema_k8sio_api_extensions_v1beta1_ReplicaSetCondition(ref common.Referenc
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -32906,7 +32836,6 @@ func schema_k8sio_api_flowcontrol_v1beta1_FlowSchemaCondition(ref common.Referen
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -33149,7 +33078,7 @@ func schema_k8sio_api_flowcontrol_v1beta1_LimitedPriorityLevelConfiguration(ref 
 				Properties: map[string]spec.Schema{
 					"assuredConcurrencyShares": {
 						SchemaProps: spec.SchemaProps{
-							Description: "`assuredConcurrencyShares` (ACS) configures the execution limit, which is a limit on the number of requests of this priority level that may be exeucting at a given time.  ACS must be a positive number. The server's concurrency limit (SCL) is divided among the concurrency-controlled priority levels in proportion to their assured concurrency shares. This produces the assured concurrency value (ACV) --- the number of requests that may be executing at a time --- for each such priority level:\n\n            ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )\n\nbigger numbers of ACS mean more reserved concurrent requests (at the expense of every other PL). This field has a default value of 30.",
+							Description: "`assuredConcurrencyShares` (ACS) configures the execution limit, which is a limit on the number of requests of this priority level that may be executing at a given time.  ACS must be a positive number. The server's concurrency limit (SCL) is divided among the concurrency-controlled priority levels in proportion to their assured concurrency shares. This produces the assured concurrency value (ACV) --- the number of requests that may be executing at a time --- for each such priority level:\n\n            ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )\n\nbigger numbers of ACS mean more reserved concurrent requests (at the expense of every other PL). This field has a default value of 30.",
 							Default:     0,
 							Type:        []string{"integer"},
 							Format:      "int32",
@@ -33385,7 +33314,6 @@ func schema_k8sio_api_flowcontrol_v1beta1_PriorityLevelConfigurationCondition(re
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -33939,7 +33867,6 @@ func schema_k8sio_api_flowcontrol_v1beta2_FlowSchemaCondition(ref common.Referen
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -34182,7 +34109,7 @@ func schema_k8sio_api_flowcontrol_v1beta2_LimitedPriorityLevelConfiguration(ref 
 				Properties: map[string]spec.Schema{
 					"assuredConcurrencyShares": {
 						SchemaProps: spec.SchemaProps{
-							Description: "`assuredConcurrencyShares` (ACS) configures the execution limit, which is a limit on the number of requests of this priority level that may be exeucting at a given time.  ACS must be a positive number. The server's concurrency limit (SCL) is divided among the concurrency-controlled priority levels in proportion to their assured concurrency shares. This produces the assured concurrency value (ACV) --- the number of requests that may be executing at a time --- for each such priority level:\n\n            ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )\n\nbigger numbers of ACS mean more reserved concurrent requests (at the expense of every other PL). This field has a default value of 30.",
+							Description: "`assuredConcurrencyShares` (ACS) configures the execution limit, which is a limit on the number of requests of this priority level that may be executing at a given time.  ACS must be a positive number. The server's concurrency limit (SCL) is divided among the concurrency-controlled priority levels in proportion to their assured concurrency shares. This produces the assured concurrency value (ACV) --- the number of requests that may be executing at a time --- for each such priority level:\n\n            ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )\n\nbigger numbers of ACS mean more reserved concurrent requests (at the expense of every other PL). This field has a default value of 30.",
 							Default:     0,
 							Type:        []string{"integer"},
 							Format:      "int32",
@@ -34418,7 +34345,6 @@ func schema_k8sio_api_flowcontrol_v1beta2_PriorityLevelConfigurationCondition(re
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -34972,7 +34898,6 @@ func schema_k8sio_api_flowcontrol_v1beta3_FlowSchemaCondition(ref common.Referen
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -35453,7 +35378,6 @@ func schema_k8sio_api_flowcontrol_v1beta3_PriorityLevelConfigurationCondition(re
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "`lastTransitionTime` is the last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -37128,146 +37052,6 @@ func schema_k8sio_api_networking_v1_ServiceBackendPort(ref common.ReferenceCallb
 	}
 }
 
-func schema_k8sio_api_networking_v1alpha1_ClusterCIDR(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ClusterCIDR represents a single configuration for per-Node Pod CIDR allocations when the MultiCIDRRangeAllocator is enabled (see the config for kube-controller-manager).  A cluster may have any number of ClusterCIDR resources, all of which will be considered when allocating a CIDR for a Node.  A ClusterCIDR is eligible to be used for a given Node when the node selector matches the node in question and has free CIDRs to allocate.  In case of multiple matching ClusterCIDR resources, the allocator will attempt to break ties using internal heuristics, but any ClusterCIDR whose node selector matches the Node may be used.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"metadata": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
-						},
-					},
-					"spec": {
-						SchemaProps: spec.SchemaProps{
-							Description: "spec is the desired state of the ClusterCIDR. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/api/networking/v1alpha1.ClusterCIDRSpec"),
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/api/networking/v1alpha1.ClusterCIDRSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
-	}
-}
-
-func schema_k8sio_api_networking_v1alpha1_ClusterCIDRList(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ClusterCIDRList contains a list of ClusterCIDR.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"kind": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"apiVersion": {
-						SchemaProps: spec.SchemaProps{
-							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"metadata": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
-						},
-					},
-					"items": {
-						SchemaProps: spec.SchemaProps{
-							Description: "items is the list of ClusterCIDRs.",
-							Type:        []string{"array"},
-							Items: &spec.SchemaOrArray{
-								Schema: &spec.Schema{
-									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/api/networking/v1alpha1.ClusterCIDR"),
-									},
-								},
-							},
-						},
-					},
-				},
-				Required: []string{"items"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/api/networking/v1alpha1.ClusterCIDR", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
-	}
-}
-
-func schema_k8sio_api_networking_v1alpha1_ClusterCIDRSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "ClusterCIDRSpec defines the desired state of ClusterCIDR.",
-				Type:        []string{"object"},
-				Properties: map[string]spec.Schema{
-					"nodeSelector": {
-						SchemaProps: spec.SchemaProps{
-							Description: "nodeSelector defines which nodes the config is applicable to. An empty or nil nodeSelector selects all nodes. This field is immutable.",
-							Ref:         ref("k8s.io/api/core/v1.NodeSelector"),
-						},
-					},
-					"perNodeHostBits": {
-						SchemaProps: spec.SchemaProps{
-							Description: "perNodeHostBits defines the number of host bits to be configured per node. A subnet mask determines how much of the address is used for network bits and host bits. For example an IPv4 address of 192.168.0.0/24, splits the address into 24 bits for the network portion and 8 bits for the host portion. To allocate 256 IPs, set this field to 8 (a /24 mask for IPv4 or a /120 for IPv6). Minimum value is 4 (16 IPs). This field is immutable.",
-							Default:     0,
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-					"ipv4": {
-						SchemaProps: spec.SchemaProps{
-							Description: "ipv4 defines an IPv4 IP block in CIDR notation(e.g. \"10.0.0.0/8\"). At least one of ipv4 and ipv6 must be specified. This field is immutable.",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"ipv6": {
-						SchemaProps: spec.SchemaProps{
-							Description: "ipv6 defines an IPv6 IP block in CIDR notation(e.g. \"2001:db8::/64\"). At least one of ipv4 and ipv6 must be specified. This field is immutable.",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-				},
-				Required: []string{"perNodeHostBits"},
-			},
-		},
-		Dependencies: []string{
-			"k8s.io/api/core/v1.NodeSelector"},
-	}
-}
-
 func schema_k8sio_api_networking_v1alpha1_IPAddress(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -37418,13 +37202,6 @@ func schema_k8sio_api_networking_v1alpha1_ParentReference(ref common.ReferenceCa
 							Format:      "",
 						},
 					},
-					"uid": {
-						SchemaProps: spec.SchemaProps{
-							Description: "UID is the uid of the object being referenced.",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
 				},
 			},
 		},
@@ -37565,7 +37342,6 @@ func schema_k8sio_api_networking_v1beta1_IngressBackend(ref common.ReferenceCall
 					"servicePort": {
 						SchemaProps: spec.SchemaProps{
 							Description: "servicePort Specifies the port of the referenced service.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/util/intstr.IntOrString"),
 						},
 					},
@@ -38097,8 +37873,7 @@ func schema_k8sio_api_node_v1_Overhead(ref common.ReferenceCallback) common.Open
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -38290,8 +38065,7 @@ func schema_k8sio_api_node_v1alpha1_Overhead(ref common.ReferenceCallback) commo
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -38506,8 +38280,7 @@ func schema_k8sio_api_node_v1beta1_Overhead(ref common.ReferenceCallback) common
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -38895,8 +38668,7 @@ func schema_k8sio_api_policy_v1_PodDisruptionBudgetStatus(ref common.ReferenceCa
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+										Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 									},
 								},
 							},
@@ -39173,8 +38945,7 @@ func schema_k8sio_api_policy_v1beta1_PodDisruptionBudgetStatus(ref common.Refere
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+										Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 									},
 								},
 							},
@@ -42446,7 +42217,7 @@ func schema_k8sio_api_storage_v1_CSIDriverSpec(ref common.ReferenceCallback) com
 					},
 					"podInfoOnMount": {
 						SchemaProps: spec.SchemaProps{
-							Description: "podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations, if set to true. If set to false, pod information will not be passed on mount. Default is false.\n\nThe CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext.\n\nThe following VolumeConext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. \"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID) \"csi.storage.k8s.io/ephemeral\": \"true\" if the volume is an ephemeral inline volume\n                                defined by a CSIVolumeSource, otherwise \"false\"\n\n\"csi.storage.k8s.io/ephemeral\" is a new feature in Kubernetes 1.16. It is only required for drivers which support both the \"Persistent\" and \"Ephemeral\" VolumeLifecycleMode. Other drivers can leave pod info disabled and/or ignore this field. As Kubernetes 1.15 doesn't support this field, drivers can only support one mode when deployed on such a cluster and the deployment determines which mode that is, for example via a command line parameter of the driver.\n\nThis field is immutable.",
+							Description: "podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations, if set to true. If set to false, pod information will not be passed on mount. Default is false.\n\nThe CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext.\n\nThe following VolumeContext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. \"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID) \"csi.storage.k8s.io/ephemeral\": \"true\" if the volume is an ephemeral inline volume\n                                defined by a CSIVolumeSource, otherwise \"false\"\n\n\"csi.storage.k8s.io/ephemeral\" is a new feature in Kubernetes 1.16. It is only required for drivers which support both the \"Persistent\" and \"Ephemeral\" VolumeLifecycleMode. Other drivers can leave pod info disabled and/or ignore this field. As Kubernetes 1.15 doesn't support this field, drivers can only support one mode when deployed on such a cluster and the deployment determines which mode that is, for example via a command line parameter of the driver.\n\nThis field is immutable.",
 							Type:        []string{"boolean"},
 							Format:      "",
 						},
@@ -43261,7 +43032,6 @@ func schema_k8sio_api_storage_v1_VolumeError(ref common.ReferenceCallback) commo
 					"time": {
 						SchemaProps: spec.SchemaProps{
 							Description: "time represents the time the error was encountered.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -43653,7 +43423,6 @@ func schema_k8sio_api_storage_v1alpha1_VolumeError(ref common.ReferenceCallback)
 					"time": {
 						SchemaProps: spec.SchemaProps{
 							Description: "time represents the time the error was encountered.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -43783,7 +43552,7 @@ func schema_k8sio_api_storage_v1beta1_CSIDriverSpec(ref common.ReferenceCallback
 					},
 					"podInfoOnMount": {
 						SchemaProps: spec.SchemaProps{
-							Description: "podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations, if set to true. If set to false, pod information will not be passed on mount. Default is false.\n\nThe CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext.\n\nThe following VolumeConext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. \"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID) \"csi.storage.k8s.io/ephemeral\": \"true\" if the volume is an ephemeral inline volume\n                                defined by a CSIVolumeSource, otherwise \"false\"\n\n\"csi.storage.k8s.io/ephemeral\" is a new feature in Kubernetes 1.16. It is only required for drivers which support both the \"Persistent\" and \"Ephemeral\" VolumeLifecycleMode. Other drivers can leave pod info disabled and/or ignore this field. As Kubernetes 1.15 doesn't support this field, drivers can only support one mode when deployed on such a cluster and the deployment determines which mode that is, for example via a command line parameter of the driver.\n\nThis field is immutable.",
+							Description: "podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations, if set to true. If set to false, pod information will not be passed on mount. Default is false.\n\nThe CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext.\n\nThe following VolumeContext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. \"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID) \"csi.storage.k8s.io/ephemeral\": \"true\" if the volume is an ephemeral inline volume\n                                defined by a CSIVolumeSource, otherwise \"false\"\n\n\"csi.storage.k8s.io/ephemeral\" is a new feature in Kubernetes 1.16. It is only required for drivers which support both the \"Persistent\" and \"Ephemeral\" VolumeLifecycleMode. Other drivers can leave pod info disabled and/or ignore this field. As Kubernetes 1.15 doesn't support this field, drivers can only support one mode when deployed on such a cluster and the deployment determines which mode that is, for example via a command line parameter of the driver.\n\nThis field is immutable.",
 							Type:        []string{"boolean"},
 							Format:      "",
 						},
@@ -44592,7 +44361,6 @@ func schema_k8sio_api_storage_v1beta1_VolumeError(ref common.ReferenceCallback) 
 					"time": {
 						SchemaProps: spec.SchemaProps{
 							Description: "time represents the time the error was encountered.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -44661,8 +44429,7 @@ func schema_pkg_apis_apiextensions_v1_ConversionRequest(ref common.ReferenceCall
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -44699,8 +44466,7 @@ func schema_pkg_apis_apiextensions_v1_ConversionResponse(ref common.ReferenceCal
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -44929,7 +44695,6 @@ func schema_pkg_apis_apiextensions_v1_CustomResourceDefinitionCondition(ref comm
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -45547,8 +45312,7 @@ func schema_pkg_apis_apiextensions_v1_JSONSchemaProps(ref common.ReferenceCallba
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1.JSON"),
+										Ref: ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1.JSON"),
 									},
 								},
 							},
@@ -45669,8 +45433,7 @@ func schema_pkg_apis_apiextensions_v1_JSONSchemaProps(ref common.ReferenceCallba
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1.JSONSchemaPropsOrStringArray"),
+										Ref: ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1.JSONSchemaPropsOrStringArray"),
 									},
 								},
 							},
@@ -46026,8 +45789,7 @@ func schema_pkg_apis_apiextensions_v1beta1_ConversionRequest(ref common.Referenc
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -46064,8 +45826,7 @@ func schema_pkg_apis_apiextensions_v1beta1_ConversionResponse(ref common.Referen
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -46309,7 +46070,6 @@ func schema_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionCondition(ref
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -46960,8 +46720,7 @@ func schema_pkg_apis_apiextensions_v1beta1_JSONSchemaProps(ref common.ReferenceC
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSON"),
+										Ref: ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSON"),
 									},
 								},
 							},
@@ -47082,8 +46841,7 @@ func schema_pkg_apis_apiextensions_v1beta1_JSONSchemaProps(ref common.ReferenceC
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaPropsOrStringArray"),
+										Ref: ref("k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1.JSONSchemaPropsOrStringArray"),
 									},
 								},
 							},
@@ -47852,7 +47610,6 @@ func schema_pkg_apis_meta_v1_Condition(ref common.ReferenceCallback) common.Open
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -48408,8 +48165,7 @@ func schema_pkg_apis_meta_v1_List(ref common.ReferenceCallback) common.OpenAPIDe
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
+										Ref: ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 									},
 								},
 							},
@@ -48695,7 +48451,6 @@ func schema_pkg_apis_meta_v1_ObjectMeta(ref common.ReferenceCallback) common.Ope
 					"creationTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.\n\nPopulated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -49477,7 +49232,6 @@ func schema_pkg_apis_meta_v1_TableRow(ref common.ReferenceCallback) common.OpenA
 					"object": {
 						SchemaProps: spec.SchemaProps{
 							Description: "This field contains the requested additional information about each object based on the includeObject policy when requesting the Table. If \"None\", this field is empty, if \"Object\" this will be the default serialization of the object for the current API version, and if \"Metadata\" (the default) will contain the object metadata. Check the returned kind and apiVersion of the object before parsing. The media type of the object will always match the enclosing list - if this as a JSON table, these will be JSON encoded objects.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -49676,7 +49430,6 @@ func schema_pkg_apis_meta_v1_WatchEvent(ref common.ReferenceCallback) common.Ope
 					"object": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -50038,14 +49791,12 @@ func schema_pkg_apis_audit_v1_Event(ref common.ReferenceCallback) common.OpenAPI
 					"requestReceivedTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time the request reached the apiserver.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
 					"stageTimestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Time the request reached current audit stage.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.MicroTime"),
 						},
 					},
@@ -50139,7 +49890,7 @@ func schema_pkg_apis_audit_v1_GroupResources(ref common.ReferenceCallback) commo
 					},
 					"resources": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Resources is a list of resources this rule applies to.\n\nFor example: 'pods' matches pods. 'pods/log' matches the log subresource of pods. '*' matches all resources and their subresources. 'pods/*' matches all subresources of pods. '*/scale' matches all scale subresources.\n\nIf wildcard is present, the validation rule will ensure resources do not overlap with each other.\n\nAn empty list implies all resources and subresources in this API groups apply.",
+							Description: "Resources is a list of resources this rule applies to.\n\nFor example: - `pods` matches pods. - `pods/log` matches the log subresource of pods. - `*` matches all resources and their subresources. - `pods/*` matches all subresources of pods. - `*/scale` matches all scale subresources.\n\nIf wildcard is present, the validation rule will ensure resources do not overlap with each other.\n\nAn empty list implies all resources and subresources in this API groups apply.",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -50449,7 +50200,7 @@ func schema_pkg_apis_audit_v1_PolicyRule(ref common.ReferenceCallback) common.Op
 					},
 					"nonResourceURLs": {
 						SchemaProps: spec.SchemaProps{
-							Description: "NonResourceURLs is a set of URL paths that should be audited. *s are allowed, but only as the full, final step in the path. Examples:\n \"/metrics\" - Log requests for apiserver metrics\n \"/healthz*\" - Log all health checks",
+							Description: "NonResourceURLs is a set of URL paths that should be audited. `*`s are allowed, but only as the full, final step in the path. Examples: - `/metrics` - Log requests for apiserver metrics - `/healthz*` - Log all health checks",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -50551,7 +50302,6 @@ func schema_pkg_apis_clientauthentication_v1_Cluster(ref common.ReferenceCallbac
 					"config": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Config holds additional config data that is specific to the exec plugin with regards to the cluster being authenticated to.\n\nThis data is sourced from the clientcmd Cluster object's extensions[client.authentication.k8s.io/exec] field:\n\nclusters: - name: my-cluster\n  cluster:\n    ...\n    extensions:\n    - name: client.authentication.k8s.io/exec  # reserved extension name for per cluster exec config\n      extension:\n        audience: 06e3fbd18de8  # arbitrary config\n\nIn some environments, the user config may be exactly the same across many clusters (i.e. call this exec plugin) minus some details that are specific to each cluster such as the audience.  This field allows the per cluster config to be directly specified with the cluster info.  Using this field to store secret data is not recommended as one of the prime benefits of exec plugins is that no secrets need to be stored directly in the kubeconfig.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -50736,7 +50486,6 @@ func schema_pkg_apis_clientauthentication_v1beta1_Cluster(ref common.ReferenceCa
 					"config": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Config holds additional config data that is specific to the exec plugin with regards to the cluster being authenticated to.\n\nThis data is sourced from the clientcmd Cluster object's extensions[client.authentication.k8s.io/exec] field:\n\nclusters: - name: my-cluster\n  cluster:\n    ...\n    extensions:\n    - name: client.authentication.k8s.io/exec  # reserved extension name for per cluster exec config\n      extension:\n        audience: 06e3fbd18de8  # arbitrary config\n\nIn some environments, the user config may be exactly the same across many clusters (i.e. call this exec plugin) minus some details that are specific to each cluster such as the audience.  This field allows the per cluster config to be directly specified with the cluster info.  Using this field to store secret data is not recommended as one of the prime benefits of exec plugins is that no secrets need to be stored directly in the kubeconfig.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -50915,7 +50664,6 @@ func schema_k8sio_cloud_provider_config_v1alpha1_CloudControllerManagerConfigura
 					"NodeStatusUpdateFrequency": {
 						SchemaProps: spec.SchemaProps{
 							Description: "NodeStatusUpdateFrequency is the frequency at which the controller updates nodes' status",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -51006,14 +50754,12 @@ func schema_k8sio_cloud_provider_config_v1alpha1_KubeCloudSharedConfiguration(re
 					"RouteReconciliationPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "routeReconciliationPeriod is the period for reconciling routes created for Nodes by cloud provider..",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"NodeMonitorPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "nodeMonitorPeriod is the period for syncing NodeStatus in NodeController.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -51059,7 +50805,6 @@ func schema_k8sio_cloud_provider_config_v1alpha1_KubeCloudSharedConfiguration(re
 					"NodeSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "nodeSyncPeriod is the period for syncing nodes from cloudprovider. Longer periods will result in fewer calls to cloud provider, but may delay addition of new nodes to cluster.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -51157,7 +50902,6 @@ func schema_k8sio_controller_manager_config_v1alpha1_GenericControllerManagerCon
 					"MinResyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "minResyncPeriod is the resync period in reflectors; will be random between minResyncPeriod and 2*minResyncPeriod.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -51171,7 +50915,6 @@ func schema_k8sio_controller_manager_config_v1alpha1_GenericControllerManagerCon
 					"ControllerStartInterval": {
 						SchemaProps: spec.SchemaProps{
 							Description: "How long to wait between starting controller managers",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -51459,7 +51202,6 @@ func schema_pkg_apis_apiregistration_v1_APIServiceCondition(ref common.Reference
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -51585,7 +51327,7 @@ func schema_pkg_apis_apiregistration_v1_APIServiceSpec(ref common.ReferenceCallb
 					},
 					"groupPriorityMinimum": {
 						SchemaProps: spec.SchemaProps{
-							Description: "GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s",
+							Description: "GroupPriorityMinimum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMinimum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s",
 							Default:     0,
 							Type:        []string{"integer"},
 							Format:      "int32",
@@ -51757,7 +51499,6 @@ func schema_pkg_apis_apiregistration_v1beta1_APIServiceCondition(ref common.Refe
 					"lastTransitionTime": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Last time the condition transitioned from one status to another.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -51883,7 +51624,7 @@ func schema_pkg_apis_apiregistration_v1beta1_APIServiceSpec(ref common.Reference
 					},
 					"groupPriorityMinimum": {
 						SchemaProps: spec.SchemaProps{
-							Description: "GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s",
+							Description: "GroupPriorityMinimum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMinimum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s",
 							Default:     0,
 							Type:        []string{"integer"},
 							Format:      "int32",
@@ -51996,8 +51737,7 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_AttachDetachController
 					},
 					"ReconcilerSyncLoopPeriod": {
 						SchemaProps: spec.SchemaProps{
-							Description: "ReconcilerSyncLoopPeriod is the amount of time the reconciler sync states loop wait between successive executions. Is set to 5 sec by default.",
-							Default:     0,
+							Description: "ReconcilerSyncLoopPeriod is the amount of time the reconciler sync states loop wait between successive executions. Is set to 60 sec by default.",
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52094,7 +51834,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_CSRSigningControllerCo
 					"ClusterSigningDuration": {
 						SchemaProps: spec.SchemaProps{
 							Description: "clusterSigningDuration is the max length of duration signed certificates will be given. Individual CSRs may request shorter certs by setting spec.expirationSeconds.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52202,7 +51941,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_EndpointControllerConf
 					"EndpointUpdatesBatchPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "EndpointUpdatesBatchPeriod describes the length of endpoint updates batching period. Processing of pod changes will be delayed by this duration to join them with potential upcoming updates and reduce the overall number of endpoints updates.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52241,7 +51979,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_EndpointSliceControlle
 					"EndpointUpdatesBatchPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "EndpointUpdatesBatchPeriod describes the length of endpoint updates batching period. Processing of pod changes will be delayed by this duration to join them with potential upcoming updates and reduce the overall number of endpoints updates.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52280,7 +52017,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_EndpointSliceMirroring
 					"MirroringEndpointUpdatesBatchPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "mirroringEndpointUpdatesBatchPeriod can be used to batch EndpointSlice updates. All updates triggered by EndpointSlice changes will be delayed by up to 'mirroringEndpointUpdatesBatchPeriod'. If other addresses in the same Endpoints resource change in that period, they will be batched to a single EndpointSlice update. Default 0 value means that each Endpoints update triggers an EndpointSlice update.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52408,28 +52144,24 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_HPAControllerConfigura
 					"HorizontalPodAutoscalerSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerSyncPeriod is the period for syncing the number of pods in horizontal pod autoscaler.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"HorizontalPodAutoscalerUpscaleForbiddenWindow": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerUpscaleForbiddenWindow is a period after which next upscale allowed.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"HorizontalPodAutoscalerDownscaleStabilizationWindow": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerDowncaleStabilizationWindow is a period for which autoscaler will look backwards and not scale down below any recommendation it made during that period.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"HorizontalPodAutoscalerDownscaleForbiddenWindow": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerDownscaleForbiddenWindow is a period after which next downscale allowed.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52444,14 +52176,12 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_HPAControllerConfigura
 					"HorizontalPodAutoscalerCPUInitializationPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerCPUInitializationPeriod is the period after pod start when CPU samples might be skipped.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"HorizontalPodAutoscalerInitialReadinessDelay": {
 						SchemaProps: spec.SchemaProps{
 							Description: "HorizontalPodAutoscalerInitialReadinessDelay is period after pod start during which readiness changes are treated as readiness being set for the first time. The only effect of this is that HPA will disregard CPU samples from unready pods that had last readiness change during that period.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52729,7 +52459,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_LegacySATokenCleanerCo
 					"CleanUpPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "CleanUpPeriod is the period of time since the last usage of an auto-generated service account token before it can be deleted.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52752,7 +52481,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_NamespaceControllerCon
 					"NamespaceSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "namespaceSyncPeriod is the period for syncing namespace life-cycle updates.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52853,21 +52581,18 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_NodeLifecycleControlle
 					"NodeStartupGracePeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "nodeStartupGracePeriod is the amount of time which we allow starting a node to be unresponsive before marking it unhealthy.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"NodeMonitorGracePeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "nodeMontiorGracePeriod is the amount of time which we allow a running node to be unresponsive before marking it unhealthy. Must be N times more than kubelet's nodeStatusUpdateFrequency, where N means number of retries allowed for kubelet to post node status.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"PodEvictionTimeout": {
 						SchemaProps: spec.SchemaProps{
 							Description: "podEvictionTimeout is the grace period for deleting pods on failed nodes.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -52906,7 +52631,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_PersistentVolumeBinder
 					"PVClaimBinderSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "pvClaimBinderSyncPeriod is the period for syncing persistent volumes and persistent volume claims.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -53094,7 +52818,6 @@ func schema_k8sio_kube_controller_manager_config_v1alpha1_ResourceQuotaControlle
 					"ResourceQuotaSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
 							Description: "resourceQuotaSyncPeriod is the period for syncing quota usage status in the system.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -53273,7 +52996,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_DetectLocalConfiguration(ref common
 				Properties: map[string]spec.Schema{
 					"bridgeInterface": {
 						SchemaProps: spec.SchemaProps{
-							Description: "BridgeInterface is a string argument which represents a single bridge interface name. Kube-proxy considers traffic as local if originating from this given bridge. This argument should be set if DetectLocalMode is set to LocalModeBridgeInterface.",
+							Description: "bridgeInterface is a bridge interface name. When DetectLocalMode is set to LocalModeBridgeInterface, kube-proxy will consider traffic to be local if it originates from this bridge.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53281,7 +53004,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_DetectLocalConfiguration(ref common
 					},
 					"interfaceNamePrefix": {
 						SchemaProps: spec.SchemaProps{
-							Description: "InterfaceNamePrefix is a string argument which represents a single interface prefix name. Kube-proxy considers traffic as local if originating from one or more interfaces which match the given prefix. This argument should be set if DetectLocalMode is set to LocalModeInterfaceNamePrefix.",
+							Description: "interfaceNamePrefix is an interface name prefix. When DetectLocalMode is set to LocalModeInterfaceNamePrefix, kube-proxy will consider traffic to be local if it originates from any interface whose name begins with this prefix.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53331,9 +53054,31 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 							},
 						},
 					},
+					"clientConnection": {
+						SchemaProps: spec.SchemaProps{
+							Description: "clientConnection specifies the kubeconfig file and client connection settings for the proxy server to use when communicating with the apiserver.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/component-base/config/v1alpha1.ClientConnectionConfiguration"),
+						},
+					},
+					"logging": {
+						SchemaProps: spec.SchemaProps{
+							Description: "logging specifies the options of logging. Refer to [Logs Options](https://github.com/kubernetes/component-base/blob/master/logs/options.go) for more information.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/component-base/logs/api/v1.LoggingConfiguration"),
+						},
+					},
+					"hostnameOverride": {
+						SchemaProps: spec.SchemaProps{
+							Description: "hostnameOverride, if non-empty, will be used as the name of the Node that kube-proxy is running on. If unset, the node name is assumed to be the same as the node's hostname.",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 					"bindAddress": {
 						SchemaProps: spec.SchemaProps{
-							Description: "bindAddress is the IP address for the proxy server to serve on (set to 0.0.0.0 for all interfaces)",
+							Description: "bindAddress can be used to override kube-proxy's idea of what its node's primary IP is. Note that the name is a historical artifact, and kube-proxy does not actually bind any sockets to this IP.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53341,7 +53086,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 					},
 					"healthzBindAddress": {
 						SchemaProps: spec.SchemaProps{
-							Description: "healthzBindAddress is the IP address and port for the health check server to serve on, defaulting to 0.0.0.0:10256",
+							Description: "healthzBindAddress is the IP address and port for the health check server to serve on, defaulting to \"0.0.0.0:10256\" (if bindAddress is unset or IPv4), or \"[::]:10256\" (if bindAddress is IPv6).",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53349,7 +53094,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 					},
 					"metricsBindAddress": {
 						SchemaProps: spec.SchemaProps{
-							Description: "metricsBindAddress is the IP address and port for the metrics server to serve on, defaulting to 127.0.0.1:10249 (set to 0.0.0.0 for all interfaces)",
+							Description: "metricsBindAddress is the IP address and port for the metrics server to serve on, defaulting to \"127.0.0.1:10249\" (if bindAddress is unset or IPv4), or \"[::1]:10249\" (if bindAddress is IPv6). (Set to \"0.0.0.0:10249\" / \"[::]:10249\" to bind on all interfaces.)",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53357,7 +53102,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 					},
 					"bindAddressHardFail": {
 						SchemaProps: spec.SchemaProps{
-							Description: "bindAddressHardFail, if true, kube-proxy will treat failure to bind to a port as fatal and exit",
+							Description: "bindAddressHardFail, if true, tells kube-proxy to treat failure to bind to a port as fatal and exit",
 							Default:     false,
 							Type:        []string{"boolean"},
 							Format:      "",
@@ -53371,27 +53116,20 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 							Format:      "",
 						},
 					},
-					"clusterCIDR": {
+					"showHiddenMetricsForVersion": {
 						SchemaProps: spec.SchemaProps{
-							Description: "clusterCIDR is the CIDR range of the pods in the cluster. It is used to bridge traffic coming from outside of the cluster. If not provided, no off-cluster bridging will be performed.",
+							Description: "showHiddenMetricsForVersion is the version for which you want to show hidden metrics.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
 						},
 					},
-					"hostnameOverride": {
+					"mode": {
 						SchemaProps: spec.SchemaProps{
-							Description: "hostnameOverride, if non-empty, will be used as the identity instead of the actual hostname.",
+							Description: "mode specifies which proxy mode to use.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
-						},
-					},
-					"clientConnection": {
-						SchemaProps: spec.SchemaProps{
-							Description: "clientConnection specifies the kubeconfig file and client connection settings for the proxy server to use when communicating with the apiserver.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/component-base/config/v1alpha1.ClientConnectionConfiguration"),
 						},
 					},
 					"iptables": {
@@ -53408,46 +53146,39 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.KubeProxyIPVSConfiguration"),
 						},
 					},
-					"oomScoreAdj": {
+					"winkernel": {
 						SchemaProps: spec.SchemaProps{
-							Description: "oomScoreAdj is the oom-score-adj value for kube-proxy process. Values must be within the range [-1000, 1000]",
-							Type:        []string{"integer"},
-							Format:      "int32",
-						},
-					},
-					"mode": {
-						SchemaProps: spec.SchemaProps{
-							Description: "mode specifies which proxy mode to use.",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"portRange": {
-						SchemaProps: spec.SchemaProps{
-							Description: "portRange is the range of host ports (beginPort-endPort, inclusive) that may be consumed in order to proxy service traffic. If unspecified (0-0) then ports will be randomly chosen.",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"conntrack": {
-						SchemaProps: spec.SchemaProps{
-							Description: "conntrack contains conntrack-related configuration options.",
+							Description: "winkernel contains winkernel-related configuration options.",
 							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.KubeProxyConntrackConfiguration"),
+							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.KubeProxyWinkernelConfiguration"),
 						},
 					},
-					"configSyncPeriod": {
+					"detectLocalMode": {
 						SchemaProps: spec.SchemaProps{
-							Description: "configSyncPeriod is how often configuration from the apiserver is refreshed. Must be greater than 0.",
-							Default:     0,
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+							Description: "detectLocalMode determines mode to use for detecting local traffic, defaults to LocalModeClusterCIDR",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"detectLocal": {
+						SchemaProps: spec.SchemaProps{
+							Description: "detectLocal contains optional configuration settings related to DetectLocalMode.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.DetectLocalConfiguration"),
+						},
+					},
+					"clusterCIDR": {
+						SchemaProps: spec.SchemaProps{
+							Description: "clusterCIDR is the CIDR range of the pods in the cluster. (For dual-stack clusters, this can be a comma-separated dual-stack pair of CIDR ranges.). When DetectLocalMode is set to LocalModeClusterCIDR, kube-proxy will consider traffic to be local if its source IP is in this range. (Otherwise it is not used.)",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"nodePortAddresses": {
 						SchemaProps: spec.SchemaProps{
-							Description: "nodePortAddresses is the --nodeport-addresses value for kube-proxy process. Values must be valid IP blocks. These values are as a parameter to select the interfaces where nodeport works. In case someone would like to expose a service on localhost for local visit and some other interfaces for particular purpose, a list of IP blocks would do that. If set it to \"127.0.0.0/8\", kube-proxy will only select the loopback interface for NodePort. If set it to a non-zero IP block, kube-proxy will filter that down to just the IPs that applied to the node. An empty string slice is meant to select all network interfaces.",
+							Description: "nodePortAddresses is a list of CIDR ranges that contain valid node IPs. If set, connections to NodePort services will only be accepted on node IPs in one of the indicated ranges. If unset, NodePort connections will be accepted on all local IPs.",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -53460,45 +53191,36 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConfiguration(ref common.R
 							},
 						},
 					},
-					"winkernel": {
+					"oomScoreAdj": {
 						SchemaProps: spec.SchemaProps{
-							Description: "winkernel contains winkernel-related configuration options.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.KubeProxyWinkernelConfiguration"),
+							Description: "oomScoreAdj is the oom-score-adj value for kube-proxy process. Values must be within the range [-1000, 1000]",
+							Type:        []string{"integer"},
+							Format:      "int32",
 						},
 					},
-					"showHiddenMetricsForVersion": {
+					"conntrack": {
 						SchemaProps: spec.SchemaProps{
-							Description: "ShowHiddenMetricsForVersion is the version for which you want to show hidden metrics.",
+							Description: "conntrack contains conntrack-related configuration options.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.KubeProxyConntrackConfiguration"),
+						},
+					},
+					"configSyncPeriod": {
+						SchemaProps: spec.SchemaProps{
+							Description: "configSyncPeriod is how often configuration from the apiserver is refreshed. Must be greater than 0.",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+						},
+					},
+					"portRange": {
+						SchemaProps: spec.SchemaProps{
+							Description: "portRange was previously used to configure the userspace proxy, but is now unused.",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
-						},
-					},
-					"detectLocalMode": {
-						SchemaProps: spec.SchemaProps{
-							Description: "DetectLocalMode determines mode to use for detecting local traffic, defaults to LocalModeClusterCIDR",
-							Default:     "",
-							Type:        []string{"string"},
-							Format:      "",
-						},
-					},
-					"detectLocal": {
-						SchemaProps: spec.SchemaProps{
-							Description: "DetectLocal contains optional configuration settings related to DetectLocalMode.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/kube-proxy/config/v1alpha1.DetectLocalConfiguration"),
-						},
-					},
-					"logging": {
-						SchemaProps: spec.SchemaProps{
-							Description: "logging specifies the options of logging. Refer to [Logs Options](https://github.com/kubernetes/component-base/blob/master/logs/options.go) for more information.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/component-base/logs/api/v1.LoggingConfiguration"),
 						},
 					},
 				},
-				Required: []string{"bindAddress", "healthzBindAddress", "metricsBindAddress", "bindAddressHardFail", "enableProfiling", "clusterCIDR", "hostnameOverride", "clientConnection", "iptables", "ipvs", "oomScoreAdj", "mode", "portRange", "conntrack", "configSyncPeriod", "nodePortAddresses", "winkernel", "showHiddenMetricsForVersion", "detectLocalMode", "detectLocal"},
+				Required: []string{"clientConnection", "hostnameOverride", "bindAddress", "healthzBindAddress", "metricsBindAddress", "bindAddressHardFail", "enableProfiling", "showHiddenMetricsForVersion", "mode", "iptables", "ipvs", "winkernel", "detectLocalMode", "detectLocal", "clusterCIDR", "nodePortAddresses", "oomScoreAdj", "conntrack", "configSyncPeriod", "portRange"},
 			},
 		},
 		Dependencies: []string{
@@ -53522,7 +53244,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConntrackConfiguration(ref
 					},
 					"min": {
 						SchemaProps: spec.SchemaProps{
-							Description: "min is the minimum value of connect-tracking records to allocate, regardless of conntrackMaxPerCore (set maxPerCore=0 to leave the limit as-is).",
+							Description: "min is the minimum value of connect-tracking records to allocate, regardless of maxPerCore (set maxPerCore=0 to leave the limit as-is).",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
@@ -53539,8 +53261,20 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyConntrackConfiguration(ref
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
+					"udpTimeout": {
+						SchemaProps: spec.SchemaProps{
+							Description: "udpTimeout is how long an idle UDP conntrack entry in UNREPLIED state will remain in the conntrack table (e.g. '30s'). Must be greater than 0 to set.",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+						},
+					},
+					"udpStreamTimeout": {
+						SchemaProps: spec.SchemaProps{
+							Description: "udpStreamTimeout is how long an idle UDP conntrack entry in ASSURED state will remain in the conntrack table (e.g. '300s'). Must be greater than 0 to set.",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+						},
+					},
 				},
-				Required: []string{"maxPerCore", "min", "tcpEstablishedTimeout", "tcpCloseWaitTimeout"},
+				Required: []string{"maxPerCore", "min", "tcpEstablishedTimeout", "tcpCloseWaitTimeout", "udpTimeout", "udpStreamTimeout"},
 			},
 		},
 		Dependencies: []string{
@@ -53557,14 +53291,14 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPTablesConfiguration(ref 
 				Properties: map[string]spec.Schema{
 					"masqueradeBit": {
 						SchemaProps: spec.SchemaProps{
-							Description: "masqueradeBit is the bit of the iptables fwmark space to use for SNAT if using the pure iptables proxy mode. Values must be within the range [0, 31].",
+							Description: "masqueradeBit is the bit of the iptables fwmark space to use for SNAT if using the iptables or ipvs proxy mode. Values must be within the range [0, 31].",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
 					},
 					"masqueradeAll": {
 						SchemaProps: spec.SchemaProps{
-							Description: "masqueradeAll tells kube-proxy to SNAT everything if using the pure iptables proxy mode.",
+							Description: "masqueradeAll tells kube-proxy to SNAT all traffic sent to Service cluster IPs, when using the iptables or ipvs proxy mode. This may be required with some CNI plugins.",
 							Default:     false,
 							Type:        []string{"boolean"},
 							Format:      "",
@@ -53572,22 +53306,20 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPTablesConfiguration(ref 
 					},
 					"localhostNodePorts": {
 						SchemaProps: spec.SchemaProps{
-							Description: "LocalhostNodePorts tells kube-proxy to allow service NodePorts to be accessed via localhost (iptables mode only)",
+							Description: "localhostNodePorts, if false, tells kube-proxy to disable the legacy behavior of allowing NodePort services to be accessed via localhost. (Applies only to iptables mode and IPv4; localhost NodePorts are never allowed with other proxy modes or with IPv6.)",
 							Type:        []string{"boolean"},
 							Format:      "",
 						},
 					},
 					"syncPeriod": {
 						SchemaProps: spec.SchemaProps{
-							Description: "syncPeriod is the period that iptables rules are refreshed (e.g. '5s', '1m', '2h22m').  Must be greater than 0.",
-							Default:     0,
+							Description: "syncPeriod is an interval (e.g. '5s', '1m', '2h22m') indicating how frequently various re-synchronizing and cleanup operations are performed. Must be greater than 0.",
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"minSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
-							Description: "minSyncPeriod is the minimum period that iptables rules are refreshed (e.g. '5s', '1m', '2h22m').",
-							Default:     0,
+							Description: "minSyncPeriod is the minimum period between iptables rule resyncs (e.g. '5s', '1m', '2h22m'). A value of 0 means every Service or EndpointSlice change will result in an immediate iptables resync.",
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -53609,21 +53341,19 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPVSConfiguration(ref comm
 				Properties: map[string]spec.Schema{
 					"syncPeriod": {
 						SchemaProps: spec.SchemaProps{
-							Description: "syncPeriod is the period that ipvs rules are refreshed (e.g. '5s', '1m', '2h22m').  Must be greater than 0.",
-							Default:     0,
+							Description: "syncPeriod is an interval (e.g. '5s', '1m', '2h22m') indicating how frequently various re-synchronizing and cleanup operations are performed. Must be greater than 0.",
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"minSyncPeriod": {
 						SchemaProps: spec.SchemaProps{
-							Description: "minSyncPeriod is the minimum period that ipvs rules are refreshed (e.g. '5s', '1m', '2h22m').",
-							Default:     0,
+							Description: "minSyncPeriod is the minimum period between IPVS rule resyncs (e.g. '5s', '1m', '2h22m'). A value of 0 means every Service or EndpointSlice change will result in an immediate IPVS resync.",
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"scheduler": {
 						SchemaProps: spec.SchemaProps{
-							Description: "ipvs scheduler",
+							Description: "scheduler is the IPVS scheduler to use",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53631,7 +53361,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPVSConfiguration(ref comm
 					},
 					"excludeCIDRs": {
 						SchemaProps: spec.SchemaProps{
-							Description: "excludeCIDRs is a list of CIDR's which the ipvs proxier should not touch when cleaning up ipvs services.",
+							Description: "excludeCIDRs is a list of CIDRs which the ipvs proxier should not touch when cleaning up ipvs services.",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -53646,7 +53376,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPVSConfiguration(ref comm
 					},
 					"strictARP": {
 						SchemaProps: spec.SchemaProps{
-							Description: "strict ARP configure arp_ignore and arp_announce to avoid answering ARP queries from kube-ipvs0 interface",
+							Description: "strictARP configures arp_ignore and arp_announce to avoid answering ARP queries from kube-ipvs0 interface",
 							Default:     false,
 							Type:        []string{"boolean"},
 							Format:      "",
@@ -53655,21 +53385,18 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyIPVSConfiguration(ref comm
 					"tcpTimeout": {
 						SchemaProps: spec.SchemaProps{
 							Description: "tcpTimeout is the timeout value used for idle IPVS TCP sessions. The default value is 0, which preserves the current timeout value on the system.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"tcpFinTimeout": {
 						SchemaProps: spec.SchemaProps{
 							Description: "tcpFinTimeout is the timeout value used for IPVS TCP sessions after receiving a FIN. The default value is 0, which preserves the current timeout value on the system.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"udpTimeout": {
 						SchemaProps: spec.SchemaProps{
 							Description: "udpTimeout is the timeout value used for IPVS UDP packets. The default value is 0, which preserves the current timeout value on the system.",
-							Default:     0,
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
@@ -53699,7 +53426,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyWinkernelConfiguration(ref
 					},
 					"sourceVip": {
 						SchemaProps: spec.SchemaProps{
-							Description: "sourceVip is the IP address of the source VIP endoint used for NAT when loadbalancing",
+							Description: "sourceVip is the IP address of the source VIP endpoint used for NAT when loadbalancing",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53715,7 +53442,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyWinkernelConfiguration(ref
 					},
 					"rootHnsEndpointName": {
 						SchemaProps: spec.SchemaProps{
-							Description: "RootHnsEndpointName is the name of hnsendpoint that is attached to l2bridge for root network namespace",
+							Description: "rootHnsEndpointName is the name of hnsendpoint that is attached to l2bridge for root network namespace",
 							Default:     "",
 							Type:        []string{"string"},
 							Format:      "",
@@ -53723,7 +53450,7 @@ func schema_k8sio_kube_proxy_config_v1alpha1_KubeProxyWinkernelConfiguration(ref
 					},
 					"forwardHealthCheckVip": {
 						SchemaProps: spec.SchemaProps{
-							Description: "ForwardHealthCheckVip forwards service VIP for health check port on Windows",
+							Description: "forwardHealthCheckVip forwards service VIP for health check port on Windows",
 							Default:     false,
 							Type:        []string{"boolean"},
 							Format:      "",
@@ -54443,7 +54170,6 @@ func schema_k8sio_kube_scheduler_config_v1_PluginConfig(ref common.ReferenceCall
 					"args": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Args defines the arguments passed to the plugins at the time of initialization. Args can have arbitrary structure.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/runtime.RawExtension"),
 						},
 					},
@@ -56467,8 +56193,7 @@ func schema_k8sio_kubelet_config_v1beta1_MemoryReservation(ref common.ReferenceC
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -56747,7 +56472,6 @@ func schema_pkg_apis_custom_metrics_v1beta1_MetricValue(ref common.ReferenceCall
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "indicates the time at which the metrics were produced",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -56761,7 +56485,6 @@ func schema_pkg_apis_custom_metrics_v1beta1_MetricValue(ref common.ReferenceCall
 					"value": {
 						SchemaProps: spec.SchemaProps{
 							Description: "the value of the metric for this",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -56938,7 +56661,6 @@ func schema_pkg_apis_custom_metrics_v1beta2_MetricValue(ref common.ReferenceCall
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "indicates the time at which the metrics were produced",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -56952,7 +56674,6 @@ func schema_pkg_apis_custom_metrics_v1beta2_MetricValue(ref common.ReferenceCall
 					"value": {
 						SchemaProps: spec.SchemaProps{
 							Description: "the value of the metric for this",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -57063,7 +56784,6 @@ func schema_pkg_apis_external_metrics_v1beta1_ExternalMetricValue(ref common.Ref
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "indicates the time at which the metrics were produced",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
@@ -57077,7 +56797,6 @@ func schema_pkg_apis_external_metrics_v1beta1_ExternalMetricValue(ref common.Ref
 					"value": {
 						SchemaProps: spec.SchemaProps{
 							Description: "the value of the metric",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 						},
 					},
@@ -57163,8 +56882,7 @@ func schema_pkg_apis_metrics_v1alpha1_ContainerMetrics(ref common.ReferenceCallb
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -57210,14 +56928,12 @@ func schema_pkg_apis_metrics_v1alpha1_NodeMetrics(ref common.ReferenceCallback) 
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The following fields define time interval from which metrics were collected from the interval [Timestamp-Window, Timestamp].",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"window": {
 						SchemaProps: spec.SchemaProps{
-							Default: 0,
-							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"usage": {
@@ -57228,8 +56944,7 @@ func schema_pkg_apis_metrics_v1alpha1_NodeMetrics(ref common.ReferenceCallback) 
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -57326,14 +57041,12 @@ func schema_pkg_apis_metrics_v1alpha1_PodMetrics(ref common.ReferenceCallback) c
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The following fields define time interval from which metrics were collected from the interval [Timestamp-Window, Timestamp].",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"window": {
 						SchemaProps: spec.SchemaProps{
-							Default: 0,
-							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"containers": {
@@ -57433,8 +57146,7 @@ func schema_pkg_apis_metrics_v1beta1_ContainerMetrics(ref common.ReferenceCallba
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -57480,14 +57192,12 @@ func schema_pkg_apis_metrics_v1beta1_NodeMetrics(ref common.ReferenceCallback) c
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The following fields define time interval from which metrics were collected from the interval [Timestamp-Window, Timestamp].",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"window": {
 						SchemaProps: spec.SchemaProps{
-							Default: 0,
-							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"usage": {
@@ -57498,8 +57208,7 @@ func schema_pkg_apis_metrics_v1beta1_NodeMetrics(ref common.ReferenceCallback) c
 								Allows: true,
 								Schema: &spec.Schema{
 									SchemaProps: spec.SchemaProps{
-										Default: map[string]interface{}{},
-										Ref:     ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
+										Ref: ref("k8s.io/apimachinery/pkg/api/resource.Quantity"),
 									},
 								},
 							},
@@ -57596,14 +57305,12 @@ func schema_pkg_apis_metrics_v1beta1_PodMetrics(ref common.ReferenceCallback) co
 					"timestamp": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The following fields define time interval from which metrics were collected from the interval [Timestamp-Window, Timestamp].",
-							Default:     map[string]interface{}{},
 							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
 					"window": {
 						SchemaProps: spec.SchemaProps{
-							Default: 0,
-							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"containers": {

@@ -210,6 +210,10 @@ func (o *BuiltInAuthenticationOptions) WithWebHook() *BuiltInAuthenticationOptio
 
 // Validate checks invalid config combination
 func (o *BuiltInAuthenticationOptions) Validate() []error {
+	if o == nil {
+		return nil
+	}
+
 	var allErrors []error
 
 	allErrors = append(allErrors, o.validateOIDCOptions()...)
@@ -270,6 +274,10 @@ func (o *BuiltInAuthenticationOptions) Validate() []error {
 
 // AddFlags returns flags of authentication for a API Server
 func (o *BuiltInAuthenticationOptions) AddFlags(fs *pflag.FlagSet) {
+	if o == nil {
+		return
+	}
+
 	fs.StringSliceVar(&o.APIAudiences, "api-audiences", o.APIAudiences, ""+
 		"Identifiers of the API. The service account token authenticator will validate that "+
 		"tokens used against the API are bound to at least one of these audiences. If the "+
@@ -416,8 +424,13 @@ func (o *BuiltInAuthenticationOptions) AddFlags(fs *pflag.FlagSet) {
 	}
 }
 
-// ToAuthenticationConfig convert BuiltInAuthenticationOptions to kubeauthenticator.Config
+// ToAuthenticationConfig convert BuiltInAuthenticationOptions to kubeauthenticator.Config. Returns
+// an empty config if o is nil.
 func (o *BuiltInAuthenticationOptions) ToAuthenticationConfig() (kubeauthenticator.Config, error) {
+	if o == nil {
+		return kubeauthenticator.Config{}, nil
+	}
+
 	ret := kubeauthenticator.Config{
 		TokenSuccessCacheTTL: o.TokenSuccessCacheTTL,
 		TokenFailureCacheTTL: o.TokenFailureCacheTTL,
@@ -556,7 +569,7 @@ func (o *BuiltInAuthenticationOptions) ToAuthenticationConfig() (kubeauthenticat
 }
 
 // ApplyTo requires already applied OpenAPIConfig and EgressSelector if present.
-func (o *BuiltInAuthenticationOptions) ApplyTo(authInfo *genericapiserver.AuthenticationInfo, secureServing *genericapiserver.SecureServingInfo, egressSelector *egressselector.EgressSelector, openAPIConfig *openapicommon.Config, openAPIV3Config *openapicommon.Config, extclient kubernetes.Interface, versionedInformer informers.SharedInformerFactory) error {
+func (o *BuiltInAuthenticationOptions) ApplyTo(authInfo *genericapiserver.AuthenticationInfo, secureServing *genericapiserver.SecureServingInfo, egressSelector *egressselector.EgressSelector, openAPIConfig *openapicommon.Config, openAPIV3Config *openapicommon.OpenAPIV3Config, extclient kubernetes.Interface, versionedInformer informers.SharedInformerFactory) error {
 	if o == nil {
 		return nil
 	}
@@ -609,14 +622,16 @@ func (o *BuiltInAuthenticationOptions) ApplyTo(authInfo *genericapiserver.Authen
 		authenticatorConfig.CustomDial = egressDialer
 	}
 
-	authInfo.Authenticator, openAPIConfig.SecurityDefinitions, err = authenticatorConfig.New()
-	if openAPIV3Config != nil {
-		openAPIV3Config.SecurityDefinitions = openAPIConfig.SecurityDefinitions
-	}
+	// var openAPIV3SecuritySchemes spec3.SecuritySchemes
+	authenticator, openAPIV2SecurityDefinitions, openAPIV3SecuritySchemes, err := authenticatorConfig.New()
 	if err != nil {
 		return err
 	}
-
+	authInfo.Authenticator = authenticator
+	openAPIConfig.SecurityDefinitions = openAPIV2SecurityDefinitions
+	if openAPIV3Config != nil {
+		openAPIV3Config.SecuritySchemes = openAPIV3SecuritySchemes
+	}
 	return nil
 }
 

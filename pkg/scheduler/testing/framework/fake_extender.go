@@ -112,7 +112,7 @@ type node2PrioritizerPlugin struct{}
 
 // NewNode2PrioritizerPlugin returns a factory function to build node2PrioritizerPlugin.
 func NewNode2PrioritizerPlugin() frameworkruntime.PluginFactory {
-	return func(_ runtime.Object, _ framework.Handle) (framework.Plugin, error) {
+	return func(_ context.Context, _ runtime.Object, _ framework.Handle) (framework.Plugin, error) {
 		return &node2PrioritizerPlugin{}, nil
 	}
 }
@@ -232,7 +232,7 @@ func (f *FakeExtender) selectVictimsOnNodeByExtender(pod *v1.Pod, node *v1.Node)
 
 	// Otherwise, as a extender support preemption and have cached node info, we will assume cachedNodeNameToInfo is available
 	// and get cached node info by given node name.
-	nodeInfoCopy := f.CachedNodeNameToInfo[node.GetName()].Clone()
+	nodeInfoCopy := f.CachedNodeNameToInfo[node.GetName()].Snapshot()
 
 	var potentialVictims []*v1.Pod
 

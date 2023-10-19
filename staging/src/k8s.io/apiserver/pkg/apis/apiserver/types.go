@@ -212,11 +212,11 @@ type AuthorizationConfiguration struct {
 }
 
 const (
-	TypeWebhook                                      AuthorizerType = "Webhook"
-	FailurePolicyNoOpinion                           string         = "NoOpinion"
-	FailurePolicyDeny                                string         = "Deny"
-	AuthorizationWebhookConnectionInfoTypeKubeConfig string         = "KubeConfigFile"
-	AuthorizationWebhookConnectionInfoTypeInCluster  string         = "InClusterConfig"
+	TypeWebhook                                          AuthorizerType = "Webhook"
+	FailurePolicyNoOpinion                               string         = "NoOpinion"
+	FailurePolicyDeny                                    string         = "Deny"
+	AuthorizationWebhookConnectionInfoTypeKubeConfigFile string         = "KubeConfigFile"
+	AuthorizationWebhookConnectionInfoTypeInCluster      string         = "InClusterConfig"
 )
 
 type AuthorizerType string
@@ -228,18 +228,19 @@ type AuthorizerConfiguration struct {
 	// types like Node, RBAC, ABAC, etc.
 	Type AuthorizerType
 
+	// Name used to describe the webhook
+	// This is explicitly used in monitoring machinery for metrics
+	// Note: Names must be DNS1123 labels like `myauthorizername` or
+	//		 subdomains like `myauthorizer.example.domain`
+	// Required, with no default
+	Name string
+
 	// Webhook defines the configuration for a Webhook authorizer
 	// Must be defined when Type=Webhook
 	Webhook *WebhookConfiguration
 }
 
 type WebhookConfiguration struct {
-	// Name used to describe the webhook
-	// This is explicitly used in monitoring machinery for metrics
-	// Note: Names must be DNS1123 labels like `mywebhookname` or
-	//		 subdomains like `webhookname.example.domain`
-	// Required, with no default
-	Name string
 	// The duration to cache 'authorized' responses from the webhook
 	// authorizer.
 	// Same as setting `--authorization-webhook-cache-authorized-ttl` flag
@@ -294,7 +295,7 @@ type WebhookConfiguration struct {
 type WebhookConnectionInfo struct {
 	// Controls how the webhook should communicate with the server.
 	// Valid values:
-	// - KubeConfig: use the file specified in kubeConfigFile to locate the
+	// - KubeConfigFile: use the file specified in kubeConfigFile to locate the
 	//   server.
 	// - InClusterConfig: use the in-cluster configuration to call the
 	//   SubjectAccessReview API hosted by kube-apiserver. This mode is not

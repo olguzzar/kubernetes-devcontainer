@@ -2886,52 +2886,52 @@ func validatePodResourceClaimSource(claimSource core.ClaimSource, fldPath *field
 	return allErrs
 }
 
-func validateLivenessProbe(probe *core.Probe, fldPath *field.Path) field.ErrorList {
+func validateLivenessProbe(probe *core.Probe, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if probe == nil {
 		return allErrs
 	}
-	allErrs = append(allErrs, validateProbe(probe, fldPath)...)
+	allErrs = append(allErrs, validateProbe(probe, gracePeriod, fldPath)...)
 	if probe.SuccessThreshold != 1 {
 		allErrs = append(allErrs, field.Invalid(fldPath.Child("successThreshold"), probe.SuccessThreshold, "must be 1"))
 	}
 	return allErrs
 }
 
-func validateReadinessProbe(probe *core.Probe, fldPath *field.Path) field.ErrorList {
+func validateReadinessProbe(probe *core.Probe, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if probe == nil {
 		return allErrs
 	}
-	allErrs = append(allErrs, validateProbe(probe, fldPath)...)
+	allErrs = append(allErrs, validateProbe(probe, gracePeriod, fldPath)...)
 	if probe.TerminationGracePeriodSeconds != nil {
 		allErrs = append(allErrs, field.Invalid(fldPath.Child("terminationGracePeriodSeconds"), probe.TerminationGracePeriodSeconds, "must not be set for readinessProbes"))
 	}
 	return allErrs
 }
 
-func validateStartupProbe(probe *core.Probe, fldPath *field.Path) field.ErrorList {
+func validateStartupProbe(probe *core.Probe, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if probe == nil {
 		return allErrs
 	}
-	allErrs = append(allErrs, validateProbe(probe, fldPath)...)
+	allErrs = append(allErrs, validateProbe(probe, gracePeriod, fldPath)...)
 	if probe.SuccessThreshold != 1 {
 		allErrs = append(allErrs, field.Invalid(fldPath.Child("successThreshold"), probe.SuccessThreshold, "must be 1"))
 	}
 	return allErrs
 }
 
-func validateProbe(probe *core.Probe, fldPath *field.Path) field.ErrorList {
+func validateProbe(probe *core.Probe, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if probe == nil {
 		return allErrs
 	}
-	allErrs = append(allErrs, validateHandler(handlerFromProbe(&probe.ProbeHandler), fldPath)...)
+	allErrs = append(allErrs, validateHandler(handlerFromProbe(&probe.ProbeHandler), gracePeriod, fldPath)...)
 
 	allErrs = append(allErrs, ValidateNonnegativeField(int64(probe.InitialDelaySeconds), fldPath.Child("initialDelaySeconds"))...)
 	allErrs = append(allErrs, ValidateNonnegativeField(int64(probe.TimeoutSeconds), fldPath.Child("timeoutSeconds"))...)
@@ -2966,6 +2966,7 @@ type commonHandler struct {
 	HTTPGet   *core.HTTPGetAction
 	TCPSocket *core.TCPSocketAction
 	GRPC      *core.GRPCAction
+	Sleep     *core.SleepAction
 }
 
 func handlerFromProbe(ph *core.ProbeHandler) commonHandler {
@@ -2982,7 +2983,17 @@ func handlerFromLifecycle(lh *core.LifecycleHandler) commonHandler {
 		Exec:      lh.Exec,
 		HTTPGet:   lh.HTTPGet,
 		TCPSocket: lh.TCPSocket,
+		Sleep:     lh.Sleep,
 	}
+}
+
+func validateSleepAction(sleep *core.SleepAction, gracePeriod int64, fldPath *field.Path) field.ErrorList {
+	allErrors := field.ErrorList{}
+	if sleep.Seconds <= 0 || sleep.Seconds > gracePeriod {
+		invalidStr := fmt.Sprintf("must be greater than 0 and less than terminationGracePeriodSeconds (%d)", gracePeriod)
+		allErrors = append(allErrors, field.Invalid(fldPath, sleep.Seconds, invalidStr))
+	}
+	return allErrors
 }
 
 func validateClientIPAffinityConfig(config *core.SessionAffinityConfig, fldPath *field.Path) field.ErrorList {
@@ -3093,7 +3104,7 @@ func validateTCPSocketAction(tcp *core.TCPSocketAction, fldPath *field.Path) fie
 func validateGRPCAction(grpc *core.GRPCAction, fldPath *field.Path) field.ErrorList {
 	return ValidatePortNumOrName(intstr.FromInt32(grpc.Port), fldPath.Child("port"))
 }
-func validateHandler(handler commonHandler, fldPath *field.Path) field.ErrorList {
+func validateHandler(handler commonHandler, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	numHandlers := 0
 	allErrors := field.ErrorList{}
 	if handler.Exec != nil {
@@ -3128,19 +3139,27 @@ func validateHandler(handler commonHandler, fldPath *field.Path) field.ErrorList
 			allErrors = append(allErrors, validateGRPCAction(handler.GRPC, fldPath.Child("grpc"))...)
 		}
 	}
+	if handler.Sleep != nil {
+		if numHandlers > 0 {
+			allErrors = append(allErrors, field.Forbidden(fldPath.Child("sleep"), "may not specify more than 1 handler type"))
+		} else {
+			numHandlers++
+			allErrors = append(allErrors, validateSleepAction(handler.Sleep, gracePeriod, fldPath.Child("sleep"))...)
+		}
+	}
 	if numHandlers == 0 {
 		allErrors = append(allErrors, field.Required(fldPath, "must specify a handler type"))
 	}
 	return allErrors
 }
 
-func validateLifecycle(lifecycle *core.Lifecycle, fldPath *field.Path) field.ErrorList {
+func validateLifecycle(lifecycle *core.Lifecycle, gracePeriod int64, fldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 	if lifecycle.PostStart != nil {
-		allErrs = append(allErrs, validateHandler(handlerFromLifecycle(lifecycle.PostStart), fldPath.Child("postStart"))...)
+		allErrs = append(allErrs, validateHandler(handlerFromLifecycle(lifecycle.PostStart), gracePeriod, fldPath.Child("postStart"))...)
 	}
 	if lifecycle.PreStop != nil {
-		allErrs = append(allErrs, validateHandler(handlerFromLifecycle(lifecycle.PreStop), fldPath.Child("preStop"))...)
+		allErrs = append(allErrs, validateHandler(handlerFromLifecycle(lifecycle.PreStop), gracePeriod, fldPath.Child("preStop"))...)
 	}
 	return allErrs
 }
@@ -3165,7 +3184,7 @@ func validatePullPolicy(policy core.PullPolicy, fldPath *field.Path) field.Error
 var supportedResizeResources = sets.NewString(string(core.ResourceCPU), string(core.ResourceMemory))
 var supportedResizePolicies = sets.NewString(string(core.NotRequired), string(core.RestartContainer))
 
-func validateResizePolicy(policyList []core.ContainerResizePolicy, fldPath *field.Path) field.ErrorList {
+func validateResizePolicy(policyList []core.ContainerResizePolicy, fldPath *field.Path, podRestartPolicy *core.RestartPolicy) field.ErrorList {
 	allErrors := field.ErrorList{}
 
 	// validate that resource name is not repeated, supported resource names and policy values are specified
@@ -3189,13 +3208,17 @@ func validateResizePolicy(policyList []core.ContainerResizePolicy, fldPath *fiel
 		default:
 			allErrors = append(allErrors, field.NotSupported(fldPath, p.RestartPolicy, supportedResizePolicies.List()))
 		}
+
+		if *podRestartPolicy == core.RestartPolicyNever && p.RestartPolicy != core.NotRequired {
+			allErrors = append(allErrors, field.Invalid(fldPath, p.RestartPolicy, "must be 'NotRequired' when `restartPolicy` is 'Never'"))
+		}
 	}
 	return allErrors
 }
 
 // validateEphemeralContainers is called by pod spec and template validation to validate the list of ephemeral containers.
 // Note that this is called for pod template even though ephemeral containers aren't allowed in pod templates.
-func validateEphemeralContainers(ephemeralContainers []core.EphemeralContainer, containers, initContainers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, fldPath *field.Path, opts PodValidationOptions) field.ErrorList {
+func validateEphemeralContainers(ephemeralContainers []core.EphemeralContainer, containers, initContainers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, fldPath *field.Path, opts PodValidationOptions, podRestartPolicy *core.RestartPolicy) field.ErrorList {
 	var allErrs field.ErrorList
 
 	if len(ephemeralContainers) == 0 {
@@ -3216,7 +3239,7 @@ func validateEphemeralContainers(ephemeralContainers []core.EphemeralContainer, 
 		idxPath := fldPath.Index(i)
 
 		c := (*core.Container)(&ec.EphemeralContainerCommon)
-		allErrs = append(allErrs, validateContainerCommon(c, volumes, podClaimNames, idxPath, opts)...)
+		allErrs = append(allErrs, validateContainerCommon(c, volumes, podClaimNames, idxPath, opts, podRestartPolicy)...)
 		// Ephemeral containers don't need looser constraints for pod templates, so it's convenient to apply both validations
 		// here where we've already converted EphemeralContainerCommon to Container.
 		allErrs = append(allErrs, validateContainerOnlyForPod(c, idxPath)...)
@@ -3278,7 +3301,7 @@ func validateFieldAllowList(value interface{}, allowedFields map[string]bool, er
 }
 
 // validateInitContainers is called by pod spec and template validation to validate the list of init containers
-func validateInitContainers(containers []core.Container, regularContainers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, fldPath *field.Path, opts PodValidationOptions) field.ErrorList {
+func validateInitContainers(containers []core.Container, regularContainers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, gracePeriod int64, fldPath *field.Path, opts PodValidationOptions, podRestartPolicy *core.RestartPolicy) field.ErrorList {
 	var allErrs field.ErrorList
 
 	allNames := sets.String{}
@@ -3289,7 +3312,7 @@ func validateInitContainers(containers []core.Container, regularContainers []cor
 		idxPath := fldPath.Index(i)
 
 		// Apply the validation common to all container types
-		allErrs = append(allErrs, validateContainerCommon(&ctr, volumes, podClaimNames, idxPath, opts)...)
+		allErrs = append(allErrs, validateContainerCommon(&ctr, volumes, podClaimNames, idxPath, opts, podRestartPolicy)...)
 
 		restartAlways := false
 		// Apply the validation specific to init containers
@@ -3312,11 +3335,11 @@ func validateInitContainers(containers []core.Container, regularContainers []cor
 		switch {
 		case restartAlways:
 			if ctr.Lifecycle != nil {
-				allErrs = append(allErrs, validateLifecycle(ctr.Lifecycle, idxPath.Child("lifecycle"))...)
+				allErrs = append(allErrs, validateLifecycle(ctr.Lifecycle, gracePeriod, idxPath.Child("lifecycle"))...)
 			}
-			allErrs = append(allErrs, validateLivenessProbe(ctr.LivenessProbe, idxPath.Child("livenessProbe"))...)
-			allErrs = append(allErrs, validateReadinessProbe(ctr.ReadinessProbe, idxPath.Child("readinessProbe"))...)
-			allErrs = append(allErrs, validateStartupProbe(ctr.StartupProbe, idxPath.Child("startupProbe"))...)
+			allErrs = append(allErrs, validateLivenessProbe(ctr.LivenessProbe, gracePeriod, idxPath.Child("livenessProbe"))...)
+			allErrs = append(allErrs, validateReadinessProbe(ctr.ReadinessProbe, gracePeriod, idxPath.Child("readinessProbe"))...)
+			allErrs = append(allErrs, validateStartupProbe(ctr.StartupProbe, gracePeriod, idxPath.Child("startupProbe"))...)
 
 		default:
 			// These fields are disallowed for init containers.
@@ -3344,7 +3367,7 @@ func validateInitContainers(containers []core.Container, regularContainers []cor
 
 // validateContainerCommon applies validation common to all container types. It's called by regular, init, and ephemeral
 // container list validation to require a properly formatted name, image, etc.
-func validateContainerCommon(ctr *core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, path *field.Path, opts PodValidationOptions) field.ErrorList {
+func validateContainerCommon(ctr *core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, path *field.Path, opts PodValidationOptions, podRestartPolicy *core.RestartPolicy) field.ErrorList {
 	var allErrs field.ErrorList
 
 	namePath := path.Child("name")
@@ -3382,7 +3405,7 @@ func validateContainerCommon(ctr *core.Container, volumes map[string]core.Volume
 	allErrs = append(allErrs, ValidateVolumeDevices(ctr.VolumeDevices, volMounts, volumes, path.Child("volumeDevices"))...)
 	allErrs = append(allErrs, validatePullPolicy(ctr.ImagePullPolicy, path.Child("imagePullPolicy"))...)
 	allErrs = append(allErrs, ValidateResourceRequirements(&ctr.Resources, podClaimNames, path.Child("resources"), opts)...)
-	allErrs = append(allErrs, validateResizePolicy(ctr.ResizePolicy, path.Child("resizePolicy"))...)
+	allErrs = append(allErrs, validateResizePolicy(ctr.ResizePolicy, path.Child("resizePolicy"), podRestartPolicy)...)
 	allErrs = append(allErrs, ValidateSecurityContext(ctr.SecurityContext, path.Child("securityContext"))...)
 	return allErrs
 }
@@ -3416,7 +3439,7 @@ func validateHostUsers(spec *core.PodSpec, fldPath *field.Path) field.ErrorList 
 }
 
 // validateContainers is called by pod spec and template validation to validate the list of regular containers.
-func validateContainers(containers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, fldPath *field.Path, opts PodValidationOptions) field.ErrorList {
+func validateContainers(containers []core.Container, volumes map[string]core.VolumeSource, podClaimNames sets.String, gracePeriod int64, fldPath *field.Path, opts PodValidationOptions, podRestartPolicy *core.RestartPolicy) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if len(containers) == 0 {
@@ -3428,7 +3451,7 @@ func validateContainers(containers []core.Container, volumes map[string]core.Vol
 		path := fldPath.Index(i)
 
 		// Apply validation common to all containers
-		allErrs = append(allErrs, validateContainerCommon(&ctr, volumes, podClaimNames, path, opts)...)
+		allErrs = append(allErrs, validateContainerCommon(&ctr, volumes, podClaimNames, path, opts, podRestartPolicy)...)
 
 		// Container names must be unique within the list of regular containers.
 		// Collisions with init or ephemeral container names will be detected by the init or ephemeral
@@ -3444,11 +3467,11 @@ func validateContainers(containers []core.Container, volumes map[string]core.Vol
 		// Regular init container and ephemeral container validation will return
 		// field.Forbidden() for these paths.
 		if ctr.Lifecycle != nil {
-			allErrs = append(allErrs, validateLifecycle(ctr.Lifecycle, path.Child("lifecycle"))...)
+			allErrs = append(allErrs, validateLifecycle(ctr.Lifecycle, gracePeriod, path.Child("lifecycle"))...)
 		}
-		allErrs = append(allErrs, validateLivenessProbe(ctr.LivenessProbe, path.Child("livenessProbe"))...)
-		allErrs = append(allErrs, validateReadinessProbe(ctr.ReadinessProbe, path.Child("readinessProbe"))...)
-		allErrs = append(allErrs, validateStartupProbe(ctr.StartupProbe, path.Child("startupProbe"))...)
+		allErrs = append(allErrs, validateLivenessProbe(ctr.LivenessProbe, gracePeriod, path.Child("livenessProbe"))...)
+		allErrs = append(allErrs, validateReadinessProbe(ctr.ReadinessProbe, gracePeriod, path.Child("readinessProbe"))...)
+		allErrs = append(allErrs, validateStartupProbe(ctr.StartupProbe, gracePeriod, path.Child("startupProbe"))...)
 
 		// These fields are disallowed for regular containers
 		if ctr.RestartPolicy != nil {
@@ -3970,13 +3993,19 @@ func validateHostIPs(pod *core.Pod) field.ErrorList {
 func ValidatePodSpec(spec *core.PodSpec, podMeta *metav1.ObjectMeta, fldPath *field.Path, opts PodValidationOptions) field.ErrorList {
 	allErrs := field.ErrorList{}
 
+	var gracePeriod int64
+	if spec.TerminationGracePeriodSeconds != nil {
+		// this could happen in tests
+		gracePeriod = *spec.TerminationGracePeriodSeconds
+	}
+
 	vols, vErrs := ValidateVolumes(spec.Volumes, podMeta, fldPath.Child("volumes"), opts)
 	allErrs = append(allErrs, vErrs...)
 	podClaimNames := gatherPodResourceClaimNames(spec.ResourceClaims)
 	allErrs = append(allErrs, validatePodResourceClaims(podMeta, spec.ResourceClaims, fldPath.Child("resourceClaims"))...)
-	allErrs = append(allErrs, validateContainers(spec.Containers, vols, podClaimNames, fldPath.Child("containers"), opts)...)
-	allErrs = append(allErrs, validateInitContainers(spec.InitContainers, spec.Containers, vols, podClaimNames, fldPath.Child("initContainers"), opts)...)
-	allErrs = append(allErrs, validateEphemeralContainers(spec.EphemeralContainers, spec.Containers, spec.InitContainers, vols, podClaimNames, fldPath.Child("ephemeralContainers"), opts)...)
+	allErrs = append(allErrs, validateContainers(spec.Containers, vols, podClaimNames, gracePeriod, fldPath.Child("containers"), opts, &spec.RestartPolicy)...)
+	allErrs = append(allErrs, validateInitContainers(spec.InitContainers, spec.Containers, vols, podClaimNames, gracePeriod, fldPath.Child("initContainers"), opts, &spec.RestartPolicy)...)
+	allErrs = append(allErrs, validateEphemeralContainers(spec.EphemeralContainers, spec.Containers, spec.InitContainers, vols, podClaimNames, fldPath.Child("ephemeralContainers"), opts, &spec.RestartPolicy)...)
 	allErrs = append(allErrs, validatePodHostNetworkDeps(spec, fldPath, opts)...)
 	allErrs = append(allErrs, validateRestartPolicy(&spec.RestartPolicy, fldPath.Child("restartPolicy"))...)
 	allErrs = append(allErrs, validateDNSPolicy(&spec.DNSPolicy, fldPath.Child("dnsPolicy"))...)
@@ -4812,19 +4841,8 @@ func ValidatePodUpdate(newPod, oldPod *core.Pod, opts PodValidationOptions) fiel
 		return allErrs
 	}
 
-	//TODO(vinaykul,InPlacePodVerticalScaling): With KEP 2527, we can rely on persistence of PodStatus.QOSClass
-	// We can use PodStatus.QOSClass instead of GetPodQOS here, in kubelet, and elsewhere, as PodStatus.QOSClass
-	// does not change once it is bootstrapped in podCreate. This needs to be addressed before beta as a
-	// separate PR covering all uses of GetPodQOS. With that change, we can drop the below block.
-	// Ref: https://github.com/kubernetes/kubernetes/pull/102884#discussion_r1093790446
-	// Ref: https://github.com/kubernetes/kubernetes/pull/102884/#discussion_r663280487
-	if utilfeature.DefaultFeatureGate.Enabled(features.InPlacePodVerticalScaling) {
-		// reject attempts to change pod qos
-		oldQoS := qos.GetPodQOS(oldPod)
-		newQoS := qos.GetPodQOS(newPod)
-		if newQoS != oldQoS {
-			allErrs = append(allErrs, field.Invalid(fldPath, newQoS, "Pod QoS is immutable"))
-		}
+	if qos.GetPodQOS(oldPod) != qos.ComputePodQOS(newPod) {
+		allErrs = append(allErrs, field.Invalid(fldPath, newPod.Status.QOSClass, "Pod QoS is immutable"))
 	}
 
 	// handle updateable fields by munging those fields prior to deep equal comparison.
