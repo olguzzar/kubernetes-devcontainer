@@ -64,7 +64,7 @@ dependencies:
 
   # etcd
   - name: "etcd"
-    version: 3.5.9
+    version: 3.5.10
     refPaths:
     - path: cluster/gce/manifests/etcd.manifest
       match: etcd_docker_tag|etcd_version
@@ -82,7 +82,7 @@ dependencies:
       match: configs\[Etcd\] = Config{list\.GcEtcdRegistry, "etcd", "\d+\.\d+.\d+(-(alpha|beta|rc).\d+)?(-\d+)?"}
 
   - name: "etcd-image"
-    version: 3.5.9
+    version: 3.5.10
     refPaths:
     - path: cluster/images/etcd/Makefile
       match: BUNDLED_ETCD_VERSIONS\?|LATEST_ETCD_VERSION\?
@@ -97,19 +97,21 @@ dependencies:
       match: registry.k8s.io/node-problem-detector/node-problem-detector
     - path: cluster/addons/node-problem-detector/npd.yaml
       match: registry.k8s.io/node-problem-detector/node-problem-detector
+    - path: cluster/addons/node-problem-detector/npd.yaml
+      match: app.kubernetes.io/version
     # TODO(dims): Ensure newer versions get uploaded to
     # - https://console.cloud.google.com/storage/browser/gke-release/winnode/node-problem-detector
     # - https://gcsweb.k8s.io/gcs/kubernetes-release/node-problem-detector/
     # and then the following references get fixed.
     #
-    # - path: cluster/gce/gci/configure.sh
-    #  match: DEFAULT_NPD_VERSION=
+    - path: cluster/gce/gci/configure.sh
+      match: DEFAULT_NPD_VERSION=
     #- path: cluster/gce/windows/k8s-node-setup.psm1
     #  match: DEFAULT_NPD_VERSION
 
   # From https://github.com/etcd-io/etcd/blob/main/Makefile
   - name: "golang: etcd release version"
-    version: 1.19.9 # https://github.com/etcd-io/etcd/blob/main/CHANGELOG/CHANGELOG-3.5.md
+    version: 1.20.10 # https://github.com/etcd-io/etcd/blob/main/CHANGELOG/CHANGELOG-3.5.md
     refPaths:
     - path: cluster/images/etcd/Makefile
       match: 'GOLANG_VERSION := \d+.\d+(alpha|beta|rc)?\.?(\d+)?'

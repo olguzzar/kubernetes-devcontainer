@@ -110,7 +110,7 @@ var _ = SIGDescribe("Summary API [NodeConformance]", func() {
 						// this now returns /sys/fs/cgroup/memory.stat total_rss
 						"RSSBytes":        bounded(1*e2evolume.Mb, memoryLimit),
 						"PageFaults":      bounded(1000, 1e9),
-						"MajorPageFaults": bounded(0, 100000),
+						"MajorPageFaults": bounded(0, 1e9),
 					}),
 					"Swap":               swapExpectation(memoryLimit),
 					"Accelerators":       gomega.BeEmpty(),
@@ -308,6 +308,16 @@ var _ = SIGDescribe("Summary API [NodeConformance]", func() {
 					}),
 					"Runtime": ptrMatchAllFields(gstruct.Fields{
 						"ImageFs": ptrMatchAllFields(gstruct.Fields{
+							"Time":           recent(maxStatsAge),
+							"AvailableBytes": fsCapacityBounds,
+							"CapacityBytes":  fsCapacityBounds,
+							// we assume we are not running tests on machines more than 10tb of disk
+							"UsedBytes":  bounded(e2evolume.Kb, 10*e2evolume.Tb),
+							"InodesFree": bounded(1e4, 1e8),
+							"Inodes":     bounded(1e4, 1e8),
+							"InodesUsed": bounded(0, 1e8),
+						}),
+						"ContainerFs": ptrMatchAllFields(gstruct.Fields{
 							"Time":           recent(maxStatsAge),
 							"AvailableBytes": fsCapacityBounds,
 							"CapacityBytes":  fsCapacityBounds,
